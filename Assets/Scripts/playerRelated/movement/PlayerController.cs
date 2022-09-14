@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check Related")]
     public float playerHeight;
     public LayerMask groundLayer;
-    private bool grounded;
+    public bool grounded;
     bool readyToJump;
     [Header("Inputs")]
     float horizontalInput;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [Header("Assignable")]
     public Transform orientation;
     Vector3 moveDirection;
-    Rigidbody rb;
+    internal Rigidbody rb;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
