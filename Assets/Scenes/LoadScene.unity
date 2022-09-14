@@ -168,6 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - Enviroment
+  - TestingScene
   - PlayerScene
   - UIScene

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadScene.unity
     guid: 9cc8af9138bced245be3bc76065b0407
   - enabled: 1
-    path: Assets/Scenes/Enviroment.unity
+    path: Assets/Scenes/TestingScene.unity
     guid: df815ab02d36eb840b0b4d20229418ca
   - enabled: 1
     path: Assets/Scenes/PlayerScene.unity
