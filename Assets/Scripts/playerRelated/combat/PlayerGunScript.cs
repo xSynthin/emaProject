@@ -36,15 +36,10 @@ public class PlayerGunScript : MonoBehaviour
         muzzleFlash.Play();
         AnimationManager.instance.CallPlayerShotEvent("playerGunShot");
         playerUtils.decreaseAmmo(1);
-        //ScoreSystem.instance.UpdateAmmoUI();
         if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance))
         {
             GameObject impact = Instantiate(shotImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
             SpawnBulletTrail(hit.point);
-            // if (hit.transform.CompareTag("Enemy"))
-            // {
-            //     hit.transform.gameObject.GetComponent<EnemyScript>()?.TakeDamage(attackDmg);
-            // }
             Destroy(impact, shotImpactParticleSystem.time + 0.5f);
         }
     }
@@ -58,7 +53,6 @@ public class PlayerGunScript : MonoBehaviour
                 AnimationManager.instance.CallPlayerReloadEvent("ReloadGun");
                 yield return new WaitForSeconds(playerUtils.reloadTime);
                 playerUtils.ammo = playerUtils.ammoMax;
-                //ScoreSystem.instance.UpdateAmmoUI();
             }
             else
             {
@@ -74,9 +68,10 @@ public class PlayerGunScript : MonoBehaviour
 
     private void SpawnBulletTrail(Vector3 point)
     {
-        GameObject bulletTrail = Instantiate(gunTracer.gameObject, shootPosition.position, Quaternion.identity);
+        Vector3 position = shootPosition.position;
+        GameObject bulletTrail = Instantiate(gunTracer.gameObject, position, Quaternion.identity);
         LineRenderer lineTrail = bulletTrail.GetComponent<LineRenderer>();
-        lineTrail.SetPosition(0, shootPosition.position);
+        lineTrail.SetPosition(0, position);
         lineTrail.SetPosition(1, point);
         Destroy(bulletTrail, 0.2f);
     }
