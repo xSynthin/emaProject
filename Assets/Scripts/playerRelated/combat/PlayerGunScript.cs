@@ -1,14 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditor.PackageManager;
-using UnityEditor.Scripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerGunScript : MonoBehaviour
 {
+    // TODO RECOIL
     // refs
     [Header("Assignable")]
     [SerializeField] private Transform weaponPosition;
@@ -56,10 +51,10 @@ public class PlayerGunScript : MonoBehaviour
             }
             else
             {
-                if (Input.GetKey(shootKey))
+                if (Input.GetKeyDown(shootKey))
                 {
                     Shoot();
-                    yield return new WaitForSeconds(fireCooldown);
+                    yield return null;
                 }
                 else yield return null;
             } 

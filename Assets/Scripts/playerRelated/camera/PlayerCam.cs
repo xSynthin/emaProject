@@ -33,10 +33,18 @@ public class PlayerCam : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        CameraSway();
+    }
+
+    private void CameraSway()
+    {
+        //float vertical = Input.GetAxisRaw("Vertical");
+        // TODO this needs to be correlated with move speed entirely
+        // probably with use of animation curves
         if (pController.rb.velocity.magnitude > minBobVal && pController.grounded)
         {
             HeadBob(counter, 0.05f, 0.05f);
-            counter += Time.deltaTime * pController.moveSpeed / 10 * 3;
+            counter += Time.deltaTime * pController.moveSpeed / 7 * 3;
             camT.localPosition = Vector3.Lerp(camT.localPosition, bobVector, Time.deltaTime * 6f);
         }
         else
@@ -45,6 +53,7 @@ public class PlayerCam : MonoBehaviour
             idleCounter += Time.deltaTime;
             camT.localPosition = Vector3.Lerp(camT.localPosition, bobVector, Time.deltaTime * 2f);
         }
+        // TODO change camera rotation while strafing/running in other dirs that forward/backward
     }
     private void HeadBob(float period, float vAmplitude, float hAmplitude)
     {
