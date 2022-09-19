@@ -44,7 +44,7 @@ public class PlayerCam : MonoBehaviour
         if (pController.rb.velocity.magnitude > minBobVal && pController.grounded)
         {
             HeadBob(counter, 0.05f, 0.05f);
-            counter += Time.deltaTime * pController.moveSpeed / 7 * 3;
+            counter += Time.deltaTime * pController.moveSpeed / 2f;
             camT.localPosition = Vector3.Lerp(camT.localPosition, bobVector, Time.deltaTime * 6f);
         }
         else

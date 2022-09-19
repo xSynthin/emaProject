@@ -265,10 +265,11 @@ GameObject:
   - component: {fileID: 771582480}
   - component: {fileID: 771582479}
   - component: {fileID: 771582478}
-  - component: {fileID: 771582482}
   - component: {fileID: 771582483}
+  - component: {fileID: 771582482}
   - component: {fileID: 771582485}
   - component: {fileID: 771582486}
+  - component: {fileID: 771582487}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -437,8 +438,22 @@ MonoBehaviour:
     type: 3}
   playerUtils: {fileID: 771582485}
   shotDistance: 30
-  fireCooldown: 0.5
   attackDmg: 10
+--- !u!114 &771582487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771582477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62689b6e7b5ae454183b6a0b9b7f042b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 771582482}
+  killMultiplier: 7
+  killTimer: 3
 --- !u!1 &1210365336
 GameObject:
   m_ObjectHideFlags: 0

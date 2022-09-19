@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 982566625571244359}
   - component: {fileID: 3592850957207167028}
-  - component: {fileID: 982566625571244358}
   m_Layer: 0
   m_Name: BulletTracer
   m_TagString: Untagged
@@ -141,17 +140,3 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &982566625571244358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980192909311218257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48fdfdc6c3c9929438037f00e5b6358f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0, a: 0}
-  speed: 10
