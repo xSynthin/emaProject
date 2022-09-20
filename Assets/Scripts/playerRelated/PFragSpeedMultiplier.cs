@@ -24,7 +24,9 @@ public class PFragSpeedMultiplier : MonoBehaviour
     IEnumerator SpeedBuff()
     {
         playerController.moveSpeed *= killMultiplier;
+        playerController.airMultiplier += 0.3f;
         yield return new WaitForSeconds(killTimer);
         playerController.moveSpeed = baseMoveSpeed;
+        playerController.airMultiplier -= 0.3f;
     }
 }
