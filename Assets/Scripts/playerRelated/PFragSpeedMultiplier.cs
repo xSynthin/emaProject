@@ -17,12 +17,13 @@ public class PFragSpeedMultiplier : MonoBehaviour
     void KillAchevied()
     {
         StopAllCoroutines();
+        StartCoroutine(UIManager.instance.CountDownTime(killTimer));
         StartCoroutine(SpeedBuff());
     }
 
     IEnumerator SpeedBuff()
     {
-        playerController.moveSpeed += killMultiplier;
+        playerController.moveSpeed *= killMultiplier;
         yield return new WaitForSeconds(killTimer);
         playerController.moveSpeed = baseMoveSpeed;
     }

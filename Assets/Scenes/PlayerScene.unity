@@ -452,8 +452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 771582482}
-  killMultiplier: 7
-  killTimer: 3
+  killMultiplier: 1.4
+  killTimer: 1.2
 --- !u!1 &1210365336
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,8 +742,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89be8f788b3dd2a47aeed7a2089bfdf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 300
-  sensY: 300
+  sensX: 200
+  sensY: 200
   orientation: {fileID: 2052976186}
   camHolder: {fileID: 2143072470}
   pController: {fileID: 771582482}

@@ -5,22 +5,31 @@ using UnityEngine;
 
 public class TestingEnemy : MonoBehaviour
 {
-    [SerializeField] private int health = 100;
+    [SerializeField] internal int health = 100;
+    internal int startHealth;
+
+    private void Start()
+    {
+        startHealth = health;
+    }
+
     private void Update()
     {
-       CheckIfDead(); 
+        CheckIfDead(); 
     }
+
     private void CheckIfDead()
     {
         if (health <= 0)
         {
-            EntitiesManager.instance.CallEnemyDeathEvent();
             Death();
+            EntitiesManager.instance.CallEnemyDeathEvent();
         }
     }
     private void Death()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // Destroy(gameObject);
     }
     public void TakeDamage(int hpToTake) => health -= hpToTake;
 }

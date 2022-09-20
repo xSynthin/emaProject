@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         // somewhere here should be sound effect
         if (grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
         // skok
-        else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier));
+        else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
     }
     private void SpeedControl()
     {
