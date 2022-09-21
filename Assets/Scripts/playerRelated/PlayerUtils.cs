@@ -8,11 +8,13 @@ public class PlayerUtils : MonoBehaviour
     [SerializeField] public int hp;
     [SerializeField] private int damageToTake;
     [SerializeField] public int ammo;
-    [SerializeField] internal float reloadTime;
+    [SerializeField] public float reloadTime;
     internal int ammoMax;
+    internal float defaultReloadTime;
     private void Start()
     {
         //ScoreSystem.instance.changePlayerHp += TakeDamage;
+        defaultReloadTime = reloadTime;
         ammoMax = ammo;
     }
     private void TakeDamage() => hp -= damageToTake;

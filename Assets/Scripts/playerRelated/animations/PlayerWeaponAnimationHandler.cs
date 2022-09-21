@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerWeaponAnimationHandler : MonoBehaviour
 {
     private Animator animator;
+    [SerializeField] private float animationSpeedBoost = 1.15f;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -17,7 +19,16 @@ public class PlayerWeaponAnimationHandler : MonoBehaviour
         animator.Play(aName, 0, 0.0f);
     }
 
-    void SpeedUpAnimation() => animator.speed *= 1.15f;
-    void ResetAnimationSpeed() => animator.speed = 1f;
+    void SpeedUpAnimation()
+    {
+        animator.speed *= animationSpeedBoost;
+        PlayerManager.instance.playerUtils.reloadTime *= (1-animationSpeedBoost);
+    }
+    void ResetAnimationSpeed()
+    {
+        animator.speed = 1f;
+        PlayerManager.instance.playerUtils.reloadTime = PlayerManager.instance.playerUtils.defaultReloadTime;
+    }
+
     void PlayerReloadingAnimation(string aName) => animator.Play(aName, 0, 0.0f);
 }

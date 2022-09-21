@@ -471,7 +471,7 @@ MonoBehaviour:
     m_Bits: 8
   grounded: 0
   orientation: {fileID: 2052976186}
-  maxSlopeAngle: 40
+  maxSlopeAngle: 32
 --- !u!54 &771582483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -528,7 +528,7 @@ MonoBehaviour:
   gunTracer: {fileID: 3592850957207167028, guid: 092cb51a4d8122f41bcbd3afa8aa1dd4,
     type: 3}
   playerUtils: {fileID: 771582485}
-  shotDistance: 30
+  shotDistance: 50
   attackDmg: 10
 --- !u!114 &771582487
 MonoBehaviour:
@@ -545,6 +545,7 @@ MonoBehaviour:
   playerController: {fileID: 771582482}
   killMultiplier: 1.4
   killTimer: 1.2
+  maxAchievableSpeed: 60
 --- !u!1 &1210365336
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +762,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 191
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

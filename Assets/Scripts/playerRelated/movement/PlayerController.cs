@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,9 @@ public class PlayerController : MonoBehaviour
         MyInput();
         SpeedControl();
         HandleDrag();
+        onSlope();
     }
+
     // kinda helper functions
     private void CheckIsGrounded() => grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
     private void HandleDrag() => rb.drag = grounded ? groundDrag : 0;
@@ -80,9 +83,13 @@ public class PlayerController : MonoBehaviour
             else
                 rb.AddForce(Vector3.down * 500f);
         }
-        if (grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
+        // change checkSlope angle for var with current slope
+        if (grounded && checkSlope() < maxSlopeAngle)
+        {
+            rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
+        }
         // skok
-        else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
+        else if (!grounded && checkSlope() < maxSlopeAngle) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
     }
     private void SpeedControl()
     {
@@ -113,15 +120,20 @@ public class PlayerController : MonoBehaviour
 
     private bool onSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
-        {
-            slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return slopeAngle  < maxSlopeAngle && slopeAngle != 0;
-        }
-
+        if (checkSlope() > maxSlopeAngle && checkSlope() != 0)
+            return true;
         return false;
     }
 
+    private float checkSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return slopeAngle;
+        }
+        return 0;
+    }
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
