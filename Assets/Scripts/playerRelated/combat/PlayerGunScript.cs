@@ -25,7 +25,6 @@ public class PlayerGunScript : MonoBehaviour
         Instantiate(gunPrefab, weaponPosition.transform);
         StartCoroutine(ShootDelay());
     }
-
     private void Shoot()
     {
         RaycastHit hit;
@@ -41,7 +40,6 @@ public class PlayerGunScript : MonoBehaviour
             Destroy(impact, shotImpactParticleSystem.time + 0.5f);
         }
     }
-
     private IEnumerator ShootDelay()
     {
         while (true)
@@ -65,7 +63,6 @@ public class PlayerGunScript : MonoBehaviour
             } 
         }
     }
-
     private void SpawnBulletTrail(Vector3 point)
     {
         Vector3 position = shootPosition.position;

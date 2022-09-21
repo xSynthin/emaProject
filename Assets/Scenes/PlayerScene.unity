@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUtils: {fileID: 771582485}
+  playerSpeedBoostScript: {fileID: 771582487}
 --- !u!1 &673972930
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   damageToTake: 3
-  ammo: 6
+  ammo: 8
   reloadTime: 0.8
 --- !u!114 &771582486
 MonoBehaviour:
@@ -543,9 +544,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 771582482}
-  killMultiplier: 1.4
+  killMultiplier: 1.25
   killTimer: 1.2
   maxAchievableSpeed: 60
+  CurrentSpeedBoost: 0
 --- !u!1 &1210365336
 GameObject:
   m_ObjectHideFlags: 0

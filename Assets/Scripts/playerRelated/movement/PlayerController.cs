@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    internal float baseMoveSpeed;
     [Header("Keymap")]
     public KeyCode jumpKey = KeyCode.Space;
     [Header("Ground Check Related")]
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        baseMoveSpeed = moveSpeed;
         rb.freezeRotation = true;
         readyToJump = true;
     }
@@ -83,7 +85,6 @@ public class PlayerController : MonoBehaviour
             else
                 rb.AddForce(Vector3.down * 500f);
         }
-        // change checkSlope angle for var with current slope
         if (grounded && slopeAngle < maxSlopeAngle)
         {
             rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
