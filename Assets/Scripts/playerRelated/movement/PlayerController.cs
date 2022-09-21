@@ -84,12 +84,12 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(Vector3.down * 500f);
         }
         // change checkSlope angle for var with current slope
-        if (grounded && checkSlope() < maxSlopeAngle)
+        if (grounded && slopeAngle < maxSlopeAngle)
         {
             rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
         }
         // skok
-        else if (!grounded && checkSlope() < maxSlopeAngle) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
+        else if (!grounded && slopeAngle < maxSlopeAngle) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
     }
     private void SpeedControl()
     {
