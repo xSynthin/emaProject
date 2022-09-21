@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 public class PlayerGunScript : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerGunScript : MonoBehaviour
     [SerializeField] private GameObject gunPrefab;
     [SerializeField] private Transform shootPosition;
     [SerializeField] private KeyCode shootKey = KeyCode.Mouse0;
+    [SerializeField] private KeyCode reloadKey = KeyCode.R;
     [SerializeField] private ParticleSystem shotImpactParticleSystem;
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private LineRenderer gunTracer;
@@ -44,17 +46,19 @@ public class PlayerGunScript : MonoBehaviour
     {
         while (true)
         {
-            if (playerUtils.ammo <= 0)
+            if (Input.GetKeyDown(reloadKey) && (playerUtils.ammo < playerUtils.ammoMax))
             {
                 AnimationManager.instance.CallPlayerReloadEvent("ReloadGun");
                 yield return new WaitForSeconds(playerUtils.reloadTime);
                 playerUtils.ammo = playerUtils.ammoMax;
+                UIManager.instance.CallPlayerAmmoChangeEvent();
             }
             else
             {
-                if (Input.GetKeyDown(shootKey))
+                if (Input.GetKeyDown(shootKey) && playerUtils.ammo > 0)
                 {
                     Shoot();
+                    UIManager.instance.CallPlayerAmmoChangeEvent();
                     yield return null;
                 }
                 else yield return null;
