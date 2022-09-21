@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
     public Transform orientation;
     Vector3 moveDirection;
     internal Rigidbody rb;
+    [Header("Slope")] 
+    public float maxSlopeAngle;
+    RaycastHit slopeHit;
+    bool slopeExit;
+    float slopeAngle;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -65,6 +70,16 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         // somewhere here should be sound effect
+        // slope
+        rb.useGravity = !onSlope();
+        if (onSlope() && !slopeExit)
+        {
+            rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-(slopeAngle/100+0.1f))));
+            if(rb.velocity.y > 0)
+                rb.AddForce(Vector3.down * 80f);
+            else
+                rb.AddForce(Vector3.down * 500f);
+        }
         if (grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
         // skok
         else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
@@ -72,6 +87,10 @@ public class PlayerController : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        // slope handling
+        if(onSlope() && !slopeExit)
+            if (rb.velocity.magnitude > moveSpeed)
+                rb.velocity = rb.velocity.normalized * moveSpeed;
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -80,6 +99,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
+        slopeExit = true;
         // reset jump velocity 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -88,5 +108,22 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(jumpCooldown);
         readyToJump = true;
+        slopeExit = false;
+    }
+
+    private bool onSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        {
+            slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return slopeAngle  < maxSlopeAngle && slopeAngle != 0;
+        }
+
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 }
