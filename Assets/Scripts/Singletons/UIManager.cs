@@ -11,7 +11,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI speedTimer;
     [SerializeField] private TextMeshProUGUI playerAmmo;
     [SerializeField] private TextMeshProUGUI speedBoostStage;
+    [SerializeField] private TextMeshProUGUI playerHp;
     public event Action playerAmmoChange;
+    public event Action PlayerHPChange;
     private int ammo;
     private int ammoMax;
     // this enum reference needs some thinking about
@@ -29,14 +31,16 @@ public class UIManager : MonoBehaviour
         };
         instance = this;
         speedTimer.gameObject.SetActive(false);
-        playerAmmoChange += RepaintPlayerAmmo;
         GManager.instance.onGameStartEvent += RepaintPlayerAmmo;
+        GManager.instance.onGameStartEvent += RepaintPlayerHP;
         GManager.instance.onGameStartEvent += SetUiSpeedBoostColor;
     }
     private void Start()
     {
         PlayerManager.instance.playerSpeedBoostActivateEvent += SetUiSpeedBoostColor;
         PlayerManager.instance.playerSpeedBoostDeactivateEvent += SetUiSpeedBoostColor;
+        PlayerHPChange += RepaintPlayerHP;
+        playerAmmoChange += RepaintPlayerAmmo;
     }
     public IEnumerator CountDownTime(float timeToCount)
     {
@@ -53,6 +57,13 @@ public class UIManager : MonoBehaviour
     {
         speedBoostStage.color = SpeedBoostColors[PlayerManager.instance.playerSpeedBoostScript.CurrentSpeedBoost];
     }
+
+    private void RepaintPlayerHP()
+    {
+        playerHp.text = $"HP: {PlayerManager.instance.playerUtils.hp}";
+    }
+
+    public void CallPlayerHpChangeEvent() => PlayerHPChange?.Invoke();
     private void RepaintPlayerAmmo()
     {
         playerAmmo.text = $"Ammo: {PlayerManager.instance.playerUtils.ammo}/{PlayerManager.instance.playerUtils.ammoMax}";

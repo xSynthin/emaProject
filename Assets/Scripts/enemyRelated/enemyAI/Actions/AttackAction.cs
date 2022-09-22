@@ -20,7 +20,9 @@ public class AttackAction : SAction
         {
             if (canAttack)
             {
+                // THIS NEEDS SOME SERIOUS TWEAKING
                 PlayerManager.instance.CallPlayerDamageTakenEvent(controller.EnemyStats.attackDamage);
+                UIManager.instance.CallPlayerHpChangeEvent();
                 canAttack = false;
                 controller.StartCoroutine(ResetAttack(controller));
             }
