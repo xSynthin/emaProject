@@ -34,7 +34,7 @@ public class PlayerGunScript : MonoBehaviour
         if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance))
         {
             if(hit.transform.CompareTag("Enemy"))
-                hit.transform.gameObject.GetComponent<TestingEnemy>()?.TakeDamage(attackDmg);
+                hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage(attackDmg);
             GameObject impact = Instantiate(shotImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
             SpawnBulletTrail(hit.point);
             Destroy(impact, shotImpactParticleSystem.time + 0.5f);

@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
         if (onSlope() && !slopeExit)
         {
             rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-(slopeAngle/100+0.1f))));
-            Debug.Log("CHUJ");
             if(rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f);
             else

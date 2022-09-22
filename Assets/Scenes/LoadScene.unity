@@ -169,6 +169,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - TestingScene
+  - Playground
   - PlayerScene
   - UIScene
