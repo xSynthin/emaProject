@@ -28,7 +28,7 @@ public class StateController : MonoBehaviour
 
     private void Start()
     {
-        localEnemyHealth = PlayerManager.instance.playerUtils.hp;
+        localEnemyHealth = mothmanUtils.health;
     }
 
     public void SetupAI(bool aiActivationFromEnemyManger, List<Transform> waypointsFromEnemyManager)
