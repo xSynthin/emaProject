@@ -9,8 +9,8 @@ public class PlayerUtils : MonoBehaviour
     [SerializeField] private int damageToTake;
     [SerializeField] public int ammo;
     [SerializeField] public float reloadTime;
-    internal int ammoMax;
-    internal float defaultReloadTime;
+    [HideInInspector] public int ammoMax;
+    [HideInInspector] public float defaultReloadTime;
     private void Start()
     {
         //ScoreSystem.instance.changePlayerHp += TakeDamage;

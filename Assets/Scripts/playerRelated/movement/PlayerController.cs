@@ -80,11 +80,14 @@ public class PlayerController : MonoBehaviour
         if (onSlope() && !slopeExit)
         {
             rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-(slopeAngle/100+0.1f))));
+            Debug.Log("CHUJ");
             if(rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f);
             else
                 rb.AddForce(Vector3.down * 500f);
         }
+        if(grounded && slopeAngle > maxSlopeAngle)
+            rb.AddForce(Vector3.down * 1000f);
         if (grounded && slopeAngle < maxSlopeAngle)
         {
             rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
@@ -121,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     private bool onSlope()
     {
-        if (checkSlope() > maxSlopeAngle && checkSlope() != 0)
+        if (checkSlope() < maxSlopeAngle && checkSlope() != 0)
             return true;
         return false;
     }

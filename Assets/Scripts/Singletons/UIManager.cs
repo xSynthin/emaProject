@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         PlayerManager.instance.playerSpeedBoostActivateEvent += SetUiSpeedBoostColor;
         PlayerManager.instance.playerSpeedBoostDeactivateEvent += SetUiSpeedBoostColor;
     }
-    internal IEnumerator CountDownTime(float timeToCount)
+    public IEnumerator CountDownTime(float timeToCount)
     {
         speedTimer.gameObject.SetActive(true);
         for (float i = timeToCount; i > 0; i -= Time.deltaTime)

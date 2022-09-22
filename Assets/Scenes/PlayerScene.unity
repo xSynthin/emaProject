@@ -505,6 +505,8 @@ MonoBehaviour:
   damageToTake: 3
   ammo: 8
   reloadTime: 0.8
+  ammoMax: 0
+  defaultReloadTime: 0
 --- !u!114 &771582486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 771582482}
   killMultiplier: 1.25
-  killTimer: 1.2
+  killTimer: 3
   maxAchievableSpeed: 60
   CurrentSpeedBoost: 0
 --- !u!1 &1210365336

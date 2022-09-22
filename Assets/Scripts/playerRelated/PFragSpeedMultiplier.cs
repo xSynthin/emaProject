@@ -10,10 +10,9 @@ public class PFragSpeedMultiplier : MonoBehaviour
     [Header("Frag Multiplier Variables")]
     [SerializeField] private float killMultiplier;
     [SerializeField] private float killTimer;
-    [SerializeField] private float maxAchievableSpeed = 60f;
     private float baseMoveSpeed;
     public PlayerCollections.SpeedStages CurrentSpeedBoost = PlayerCollections.SpeedStages.normal;
-    internal Dictionary<PlayerCollections.SpeedStages, float> SpeedStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
+    [HideInInspector] public Dictionary<PlayerCollections.SpeedStages, float> SpeedStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
     private void Awake()
     {
         // this should be cleaned TODO
@@ -47,17 +46,25 @@ public class PFragSpeedMultiplier : MonoBehaviour
     }
     void KillAchevied()
     {
-        if (playerController.moveSpeed < maxAchievableSpeed)
+        if (playerController.moveSpeed < SpeedStagesVals[PlayerCollections.SpeedStages.boosted5])
         {
             StopAllCoroutines();
-            if(CurrentSpeedBoost == PlayerCollections.SpeedStages.boosted5)
-                StartCoroutine(UIManager.instance.CountDownTime(killTimer+0.05f));
-            else
-                StartCoroutine(UIManager.instance.CountDownTime(killTimer));
+            StartCoroutine(UIManager.instance.CountDownTime(killTimer));
             StartCoroutine(SpeedBuff());
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(UIManager.instance.CountDownTime(killTimer));
+            StartCoroutine(MaxSpeedBuff());
         }
     }
 
+    IEnumerator MaxSpeedBuff()
+    {
+        yield return new WaitForSeconds(killTimer);
+        PlayerManager.instance.CallPlayerSpeedBoostDeactivateEvent();
+    }
     IEnumerator SpeedBuff()
     {
         PlayerManager.instance.CallPlayerSpeedBoostActivateEvent();
