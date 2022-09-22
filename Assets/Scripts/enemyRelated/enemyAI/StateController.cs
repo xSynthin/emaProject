@@ -14,7 +14,6 @@ public class StateController : MonoBehaviour
     public float chaseSpeed;
     [HideInInspector] public NavMeshAgent NavMeshAgent;
     public List<Transform> wayPointList;
-    public MothmanUtils mothmanUtils;
     [HideInInspector] public int nextWayPoint;
     [HideInInspector] public Transform chaseTarget;
     private bool aiActive;

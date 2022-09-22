@@ -6,12 +6,6 @@ using UnityEngine;
 public class MothmanUtils : EnemyUtils
 {
     public EnemyStats mothManStats;
-    [HideInInspector] public float health;
-    public void Start()
-    {
-        health = mothManStats.health;
-    }
-
     private void Update()
     {
        DeathCheck(); 
@@ -19,7 +13,7 @@ public class MothmanUtils : EnemyUtils
 
     public override void DeathCheck()
     {
-        if (health <= 0)
+        if (mothManStats.health <= 0)
         {
             Death();
             EntitiesManager.instance.CallEnemyDeathEvent();
@@ -31,5 +25,5 @@ public class MothmanUtils : EnemyUtils
         Destroy(gameObject);
     }
 
-    public override void TakeDamage(int hpToTake) => health -= hpToTake;
+    public override void TakeDamage(int hpToTake) => mothManStats.health -= hpToTake;
 }
