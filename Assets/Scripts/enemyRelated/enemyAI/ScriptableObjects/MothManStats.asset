@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56f50ad0df99594eb52ad57a8332617, type: 3}
   m_Name: MothManStats
   m_EditorClassIdentifier: 
-  moveSpeed: 1
   lookRange: 40
   lookSphereCastRadius: 1
   attackRange: 1
-  attackRate: 1
-  attackDamage: 50
+  attackRate: 0.3
+  attackDamage: 3
   health: 100
-  wanderingRange: 2
+  attacked: 0

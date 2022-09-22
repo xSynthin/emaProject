@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class PlayerUtils : MonoBehaviour
 {
-    [SerializeField] public int hp;
-    [SerializeField] private int damageToTake;
+    [SerializeField] public float hp;
     [SerializeField] public int ammo;
     [SerializeField] public float reloadTime;
     [HideInInspector] public int ammoMax;
@@ -14,9 +13,10 @@ public class PlayerUtils : MonoBehaviour
     private void Start()
     {
         //ScoreSystem.instance.changePlayerHp += TakeDamage;
+        PlayerManager.instance.playerDamageTakenEvent += TakeDamage;
         defaultReloadTime = reloadTime;
         ammoMax = ammo;
     }
-    private void TakeDamage() => hp -= damageToTake;
+    private void TakeDamage(float dmgToTake) => hp -= dmgToTake;
     public void decreaseAmmo(int ammoToDecrease) => ammo -= ammoToDecrease;
 }

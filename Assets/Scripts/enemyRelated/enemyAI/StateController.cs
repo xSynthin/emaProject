@@ -12,12 +12,13 @@ public class StateController : MonoBehaviour
     public State remainState;
     public float patrolSpeed;
     public float chaseSpeed;
+    public MothmanUtils mothmanUtils;
     [HideInInspector] public NavMeshAgent NavMeshAgent;
     public List<Transform> wayPointList;
     [HideInInspector] public int nextWayPoint;
     [HideInInspector] public Transform chaseTarget;
     private bool aiActive;
-    [HideInInspector] public float localHealth;
+    [HideInInspector] public float localEnemyHealth;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class StateController : MonoBehaviour
 
     private void Start()
     {
-        localHealth = PlayerManager.instance.playerUtils.hp;
+        localEnemyHealth = PlayerManager.instance.playerUtils.hp;
     }
 
     public void SetupAI(bool aiActivationFromEnemyManger, List<Transform> waypointsFromEnemyManager)
@@ -58,6 +59,8 @@ public class StateController : MonoBehaviour
     public void TransitionToState(State nextState)
     {
         if (nextState != remainState)
+        {
             currentState = nextState;
+        }
     }
 }

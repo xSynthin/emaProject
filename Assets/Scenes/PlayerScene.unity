@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 771582485}
   - component: {fileID: 771582486}
   - component: {fileID: 771582487}
+  - component: {fileID: 771582488}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -502,7 +503,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  damageToTake: 3
   ammo: 8
   reloadTime: 0.8
   ammoMax: 0
@@ -549,6 +549,22 @@ MonoBehaviour:
   killMultiplier: 1.25
   killTimer: 3
   CurrentSpeedBoost: 0
+--- !u!208 &771582488
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771582477}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.3, y: 1, z: 0.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1210365336
 GameObject:
   m_ObjectHideFlags: 0

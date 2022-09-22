@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -20,6 +21,7 @@ public class LookDecision : Decision
                 controller.eyes.forward, out hit, controller.EnemyStats.lookRange)
             && hit.collider.CompareTag("Player"))
         {
+            controller.EnemyStats.attacked = true;
             controller.chaseTarget = hit.transform;
             return true;
         }

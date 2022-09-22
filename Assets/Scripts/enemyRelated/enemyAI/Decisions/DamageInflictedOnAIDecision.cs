@@ -14,15 +14,17 @@ public class DamageInflictedOnAIDecision : Decision
     }
     private bool FindDamageSource(StateController controller)
     {
-        if (controller.EnemyStats.health != controller.localHealth)
+        if (controller.mothmanUtils.health != controller.localEnemyHealth || controller.EnemyStats.attacked)
         {
+            controller.EnemyStats.attacked = true;
             //TODO THIS NEEDS SERIOUS CHANGES
             //LAME IMPLEMENTATION
             controller.chaseTarget = PlayerManager.instance.playerUtils.transform;
-            controller.localHealth = controller.EnemyStats.health;
+            controller.localEnemyHealth = controller.mothmanUtils.health;
             return true;
         }
-        controller.localHealth = controller.EnemyStats.health;
+        controller.EnemyStats.attacked = false;
+        controller.localEnemyHealth = controller.mothmanUtils.health;
         return false;
     }
 }

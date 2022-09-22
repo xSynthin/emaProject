@@ -10,10 +10,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] public PFragSpeedMultiplier playerSpeedBoostScript;
     public event Action playerSpeedBoostActivateEvent;
     public event Action playerSpeedBoostDeactivateEvent;
+    public event Action<float> playerDamageTakenEvent;
     private void Awake()
     {
         instance = this;
     }
     public void CallPlayerSpeedBoostActivateEvent() => playerSpeedBoostActivateEvent?.Invoke();
+    public void CallPlayerDamageTakenEvent(float dmgToTake) => playerDamageTakenEvent?.Invoke(dmgToTake);
     public void CallPlayerSpeedBoostDeactivateEvent() => playerSpeedBoostDeactivateEvent?.Invoke();
 }
