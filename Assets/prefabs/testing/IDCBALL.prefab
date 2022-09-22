@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  startHealth: 0
 --- !u!65 &1310644894
 BoxCollider:
   m_ObjectHideFlags: 0

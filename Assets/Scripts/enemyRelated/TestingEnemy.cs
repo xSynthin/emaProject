@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestingEnemy : MonoBehaviour
+public class TestingEnemy : EnemyUtils
 {
-    [SerializeField] internal int health = 100;
-    internal int startHealth;
+    public float health;
+    [HideInInspector] public float startHealth;
 
     private void Start()
     {
@@ -15,10 +15,10 @@ public class TestingEnemy : MonoBehaviour
 
     private void Update()
     {
-        CheckIfDead(); 
+        DeathCheck(); 
     }
 
-    private void CheckIfDead()
+    public override void DeathCheck()
     {
         if (health <= 0)
         {
@@ -29,7 +29,6 @@ public class TestingEnemy : MonoBehaviour
     private void Death()
     {
         gameObject.SetActive(false);
-        // Destroy(gameObject);
     }
-    public void TakeDamage(int hpToTake) => health -= hpToTake;
+    public override void TakeDamage(int hpToTake) => health -= hpToTake;
 }
