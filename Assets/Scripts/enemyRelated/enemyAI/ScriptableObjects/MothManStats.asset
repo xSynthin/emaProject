@@ -17,5 +17,5 @@ MonoBehaviour:
   attackRange: 1
   attackRate: 0.3
   attackDamage: 3
-  health: 50
+  health: 30
   attacked: 0

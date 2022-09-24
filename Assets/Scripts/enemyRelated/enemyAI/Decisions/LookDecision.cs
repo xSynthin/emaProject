@@ -10,6 +10,11 @@ public class LookDecision : Decision
     public override bool Decide(StateController controller)
     {
         bool targetVisible = Look(controller);
+        if (controller.noPatrol)
+        {
+            controller.chaseTarget = PlayerManager.instance.playerUtils.transform;
+            return true;
+        }
         return targetVisible;
     }
 

@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
-    internal float baseMoveSpeed;
     [Header("Keymap")]
     public KeyCode jumpKey = KeyCode.Space;
     [Header("Ground Check Related")]
@@ -31,10 +30,10 @@ public class PlayerController : MonoBehaviour
     RaycastHit slopeHit;
     bool slopeExit;
     float slopeAngle;
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        baseMoveSpeed = moveSpeed;
         rb.freezeRotation = true;
         readyToJump = true;
     }
@@ -46,7 +45,6 @@ public class PlayerController : MonoBehaviour
         HandleDrag();
         onSlope();
     }
-
     // kinda helper functions
     private void CheckIsGrounded() => grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
     private void HandleDrag() => rb.drag = grounded ? groundDrag : 0;
@@ -79,11 +77,9 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = !onSlope();
         if (onSlope() && !slopeExit)
         {
-            rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-(slopeAngle/100+0.1f))));
+            rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-slopeAngle/100+0.1f)*2));
             if(rb.velocity.y > 0)
-                rb.AddForce(Vector3.down * 80f);
-            else
-                rb.AddForce(Vector3.down * 500f);
+                rb.AddForce(Vector3.down * 200f);
         }
         if(grounded && slopeAngle > maxSlopeAngle)
             rb.AddForce(Vector3.down * 1000f);

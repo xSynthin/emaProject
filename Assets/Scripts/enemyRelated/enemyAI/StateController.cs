@@ -18,8 +18,8 @@ public class StateController : MonoBehaviour
     [HideInInspector] public int nextWayPoint;
     [HideInInspector] public Transform chaseTarget;
     private bool aiActive;
+    [HideInInspector] public bool noPatrol;
     [HideInInspector] public float localEnemyHealth;
-
     private void Awake()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();

@@ -31,7 +31,7 @@ public class PlayerGunScript : MonoBehaviour
         muzzleFlash.Play();
         AnimationManager.instance.CallPlayerShotEvent("playerGunShot");
         playerUtils.decreaseAmmo(1);
-        if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance))
+        if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide"))
         {
             if(hit.transform.CompareTag("Enemy"))
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage(attackDmg);
