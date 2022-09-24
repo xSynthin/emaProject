@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,23 +16,22 @@ public class AttackAction : SAction
 
     private void Attack(StateController controller)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(controller.eyes.position, controller.eyes.forward, out hit, 1.5f) && hit.collider.CompareTag("Player"))
+        //RaycastHit hit;
+        //this can be optimized through doing dist check manually
+        if (canAttack)
         {
-            if (canAttack)
-            {
-                // THIS NEEDS SOME SERIOUS TWEAKING
-                PlayerManager.instance.CallPlayerDamageTakenEvent(controller.EnemyStats.attackDamage);
-                UIManager.instance.CallPlayerHpChangeEvent();
-                canAttack = false;
-                controller.StartCoroutine(ResetAttack(controller));
-            }
+            // THIS NEEDS SOME SERIOUS TWEAKING
+            PlayerManager.instance.CallPlayerDamageTakenEvent(controller.EnemyStats.attackDamage);
+            UIManager.instance.CallPlayerHpChangeEvent();
+            controller.transform.GetComponent<Renderer>().material.color = Color.red;
+            canAttack = false;
+            controller.StartCoroutine(ResetAttack(controller));
         }
     }
-
     private IEnumerator ResetAttack(StateController controller)
     {
         yield return new WaitForSeconds(controller.EnemyStats.attackRate);
+        controller.transform.GetComponent<Renderer>().material.color = Color.black;
         canAttack = true;
     }
 }

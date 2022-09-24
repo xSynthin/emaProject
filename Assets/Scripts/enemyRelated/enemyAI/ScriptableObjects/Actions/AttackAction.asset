@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 938918a6a81bce744878aa41bf7a36ab, type: 3}
-  m_Name: AtackAction
+  m_Name: AttackAction
   m_EditorClassIdentifier: 

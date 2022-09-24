@@ -15,6 +15,7 @@ public class ChaseAction : SAction
     {
         controller.NavMeshAgent.speed = controller.chaseSpeed;
         controller.NavMeshAgent.destination = controller.chaseTarget.position;
+        //controller.transform.LookAt(controller.chaseTarget);
         controller.NavMeshAgent.isStopped = false;
     }
 }
