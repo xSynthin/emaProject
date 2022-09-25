@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f1a5fbecee3f614bb34d4733161f6f0, type: 3}
-  m_Name: MothManStats
+  m_Name: ChrysalisStats
   m_EditorClassIdentifier: 
-  lookRange: 60
+  lookRange: 100
   lookSphereCastRadius: 1
-  attackRange: 2
+  attackRange: 1
   attackRate: 1
   attackDamage: 50
-  health: 30
+  health: 100
   attacked: 0
-  chaseSpeed: 15
-  patrolSpeed: 5
+  chaseSpeed: 6
+  patrolSpeed: 3

@@ -25,7 +25,7 @@ public class MoveToWaypoint : IState
     }
     private void MoveEnemyToWaypoint()
     {
-        Vector3 direction = (_mothmanController.Target.transform.position - _mothmanController.transform.position).normalized;
+        Vector3 direction = (_mothmanController.WaypointTarget.transform.position - _mothmanController.transform.position).normalized;
         _mothmanController.RotateToDirection(direction);
         _navMeshAgent.Move(direction * (_mothmanController.mothmanStats.patrolSpeed * Time.deltaTime));
     }
@@ -34,12 +34,11 @@ public class MoveToWaypoint : IState
     {
         timeStuck = 0f;
         _navMeshAgent.enabled = true;
-        //_navMeshAgent.SetDestination(_mothmanController.Target.transform.position);
     }
 
     public void OnExit()
     {
         _navMeshAgent.enabled = false;
-        _mothmanController.wayPointReached = true;
+        //_mothmanController.wayPointReached = true;
     }
 }

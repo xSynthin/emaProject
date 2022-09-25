@@ -9,13 +9,13 @@ public class mothmanController : MonoBehaviour
     private StateMachine _stateMachine;
     [HideInInspector] public Transform PlayerLocation;
     public EnemyStats mothmanStats;
-    public Waypoint Target { get; set; }
+    public Waypoint WaypointTarget { get; set; }
     public MothmanUtils mothmanUtils;
-    public bool wayPointReached { get; set; }
+    //public bool wayPointReached { get; set; }
     private MoveToWaypoint moveToWaypoint;
     private void Awake()
     {
-        wayPointReached = true;
+        //wayPointReached = true;
         var navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new StateMachine();
         var chasePlayer = new ChasePlayer(this, navMeshAgent);
@@ -44,7 +44,7 @@ public class mothmanController : MonoBehaviour
                 return true;
         return false;
     };
-    Func<bool> HasWaypoint() => () => Target != null;
+    Func<bool> HasWaypoint() => () => WaypointTarget != null;
     Func<bool> StuckForOverASecond() => () => moveToWaypoint.timeStuck > 1f;
     Func<bool> PlayerInSight() => () =>
     {

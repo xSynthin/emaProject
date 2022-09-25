@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SearchForWaypoint : IState
+public class SearchForWaypointCH : IState
 {
-    private readonly mothmanController _mothmanController;
-    public SearchForWaypoint( mothmanController mothmanController) => _mothmanController = mothmanController;
-
+    private readonly chrysalisController _chrysalisController;
+    public SearchForWaypointCH( chrysalisController chrysalisController) => _chrysalisController = chrysalisController;
     public void Tick()
     {
         // if(_mothmanController.wayPointReached) {
-        _mothmanController.WaypointTarget = FindNextWaypoint(5);
+        _chrysalisController.WaypointTarget = FindNextWaypoint(5);
         //}
     }
-
     private Waypoint FindNextWaypoint(int pickFromNearest)
     {
         return Object.FindObjectsOfType<Waypoint>()
-            .OrderBy(t => Vector3.Distance(_mothmanController.transform.position, t.transform.position))
+            .OrderBy(t => Vector3.Distance(_chrysalisController.transform.position, t.transform.position))
             .Take(pickFromNearest)
             .OrderBy(t => Random.Range(0, int.MaxValue))
             .FirstOrDefault();
     }
-    
-
     public void OnEnter() { }
 
     public void OnExit() { }
