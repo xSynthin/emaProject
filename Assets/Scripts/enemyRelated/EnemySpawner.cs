@@ -16,24 +16,24 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private bool shouldPatrol;
     
 
-    private void Awake()
-    {
-        foreach (var waypoint in EnemyWaypointsList)
-        {
-            enemyToSpawnPrefab.GetComponent<StateController>().wayPointList.Add(waypoint);
-        }
-        if (!shouldPatrol)
-            enemyToSpawnPrefab.GetComponent<StateController>().noPatrol = true;
-    }
-    void Update()
-    {
-        SpawnEnemys();
-    }
-    void SpawnEnemys()
-    {
-        if(enemyList.Count < enemyCount)
-            if(SpawnerActivationPoint.GetComponent<SpawnerActivationCheck>().activate)
-                for (int i = 0; i < enemyCount; i++)
-                    enemyList.Add(Instantiate(enemyToSpawnPrefab, spawnPoint.position + new Vector3(0,0,i), Quaternion.identity).transform);
-    }
+    // private void Awake()
+    // {
+    //     foreach (var waypoint in EnemyWaypointsList)
+    //     {
+    //         enemyToSpawnPrefab.GetComponent<StateController>().wayPointList.Add(waypoint);
+    //     }
+    //     if (!shouldPatrol)
+    //         enemyToSpawnPrefab.GetComponent<StateController>().noPatrol = true;
+    // }
+    // void Update()
+    // {
+    //     SpawnEnemys();
+    // }
+    // void SpawnEnemys()
+    // {
+    //     if(enemyList.Count < enemyCount)
+    //         if(SpawnerActivationPoint.GetComponent<SpawnerActivationCheck>().activate)
+    //             for (int i = 0; i < enemyCount; i++)
+    //                 enemyList.Add(Instantiate(enemyToSpawnPrefab, spawnPoint.position + new Vector3(0,0,i), Quaternion.identity).transform);
+    // }
 }

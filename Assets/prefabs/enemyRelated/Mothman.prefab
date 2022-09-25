@@ -206,10 +206,8 @@ GameObject:
   - component: {fileID: 2647771586212152376}
   - component: {fileID: 2647771586212152377}
   - component: {fileID: 2647771586212152326}
-  - component: {fileID: 2647771586212152378}
   - component: {fileID: 2647771586212152380}
   - component: {fileID: 2647771586017931739}
-  - component: {fileID: 2970674521984927759}
   m_Layer: 0
   m_Name: Mothman
   m_TagString: Enemy
@@ -297,31 +295,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2647771586212152378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2647771586212152327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cae671649d4b94e84741dde20a90ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: ccaedfe2cd0665545ae5345abc6d3e51, type: 2}
-  EnemyStats: {fileID: 11400000, guid: 54bcc51fe076fd84384b8425ed45d033, type: 2}
-  eyes: {fileID: 2647771587197914236}
-  remainState: {fileID: 11400000, guid: 1e122245f7183ff488b3c6ad65b7c61b, type: 2}
-  patrolSpeed: 5
-  chaseSpeed: 20
-  mothmanUtils: {fileID: 2647771586212152380}
-  NavMeshAgent: {fileID: 0}
-  wayPointList: []
-  nextWayPoint: 0
-  chaseTarget: {fileID: 0}
-  noPatrol: 0
-  localEnemyHealth: 0
 --- !u!114 &2647771586212152380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,22 +331,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &2970674521984927759
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2647771586212152327}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1 &2647771586619456050
 GameObject:
   m_ObjectHideFlags: 0
