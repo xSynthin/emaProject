@@ -347,6 +347,7 @@ MonoBehaviour:
   PlayerLocation: {fileID: 0}
   mothmanStats: {fileID: 11400000, guid: 3f976f547ff78b749be9c1d700c47004, type: 2}
   mothmanUtils: {fileID: 2647771586212152380}
+  maxDistanceToWaypoint: 20
 --- !u!1 &2647771586619456050
 GameObject:
   m_ObjectHideFlags: 0

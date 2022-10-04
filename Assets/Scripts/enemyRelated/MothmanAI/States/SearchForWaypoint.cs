@@ -17,11 +17,12 @@ public class SearchForWaypoint : IState
 
     private Waypoint FindNextWaypoint(int pickFromNearest)
     {
-        return Object.FindObjectsOfType<Waypoint>()
+        return Object
+            .FindObjectsOfType<Waypoint>()
             .OrderBy(t => Vector3.Distance(_mothmanController.transform.position, t.transform.position))
             .Take(pickFromNearest)
             .OrderBy(t => Random.Range(0, int.MaxValue))
-            .FirstOrDefault();
+            .FirstOrDefault(t => Vector3.Distance(_mothmanController.transform.position, t.transform.position) <= _mothmanController.maxDistanceToWaypoint);
     }
     
 

@@ -12,14 +12,16 @@ public class mothmanController : MonoBehaviour
     public Waypoint WaypointTarget { get; set; }
     public MothmanUtils mothmanUtils;
     //public bool wayPointReached { get; set; }
+    public float maxDistanceToWaypoint = 20f;
     private MoveToWaypoint moveToWaypoint;
+    private ChasePlayer chasePlayer;
+    private SearchForWaypoint search;
     private void Awake()
     {
-        //wayPointReached = true;
         var navMeshAgent = GetComponent<NavMeshAgent>();
         _stateMachine = new StateMachine();
-        var chasePlayer = new ChasePlayer(this, navMeshAgent);
-        var search = new SearchForWaypoint(this);
+        chasePlayer = new ChasePlayer(this, navMeshAgent);
+        search = new SearchForWaypoint(this);
         var attack = new MothmanAttack(this, navMeshAgent);
         moveToWaypoint = new MoveToWaypoint(this, navMeshAgent);
         At(search, moveToWaypoint, HasWaypoint());
@@ -51,6 +53,7 @@ public class mothmanController : MonoBehaviour
         RaycastHit hit;
         if (PlayerLocation.position != Vector3.zero)
         {
+            RotateToDirection(PlayerLocation.position);
             if (Physics.Raycast(transform.position, (PlayerLocation.position - transform.position).normalized,
                     out hit,
                     mothmanStats.lookRange) && hit.collider.CompareTag("Player") && PlayerInAttackRange().Invoke() == false)
@@ -63,12 +66,13 @@ public class mothmanController : MonoBehaviour
 
     private void Start()
     {
-         PlayerLocation = PlayerManager.instance.playerUtils.transform;
+        PlayerLocation = PlayerManager.instance.playerUtils.transform;
     }
 
     private void Update()
     {
         _stateMachine.Tick();
+        print(PlayerLocation.position);
     }
     public void RotateToDirection(Vector3 direction)
     {

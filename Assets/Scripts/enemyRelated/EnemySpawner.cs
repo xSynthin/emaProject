@@ -21,6 +21,6 @@ public class EnemySpawner : MonoBehaviour
         if(enemyList.Count < enemyCount)
             if(SpawnerActivationPoint.GetComponent<SpawnerActivationCheck>().activate)
                 for (int i = 0; i < enemyCount; i++)
-                    enemyList.Add(Instantiate(enemyToSpawnPrefab, spawnPoint.position + new Vector3(0,0,i), Quaternion.identity).transform);
+                    enemyList.Add(Instantiate(enemyToSpawnPrefab, spawnPoint.position + new Vector3(i,0,i), Quaternion.identity).transform);
     }
 }

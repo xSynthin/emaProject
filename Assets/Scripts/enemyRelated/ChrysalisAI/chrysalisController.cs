@@ -12,6 +12,7 @@ public class chrysalisController : MonoBehaviour
     public Waypoint WaypointTarget { get; set; }
     public ChrysalisUtils chrysalisUtils;
     [HideInInspector] public MoveToWaypointCH moveToWaypointCh;
+    public float maxDistanceToWaypoint = 20f;
     private void Awake()
     {
         var navMeshAgent = GetComponent<NavMeshAgent>();

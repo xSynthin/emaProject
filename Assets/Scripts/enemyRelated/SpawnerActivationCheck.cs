@@ -15,6 +15,9 @@ public class SpawnerActivationCheck : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
+            GetComponent<BoxCollider>().enabled = false;
             activate = true;
+        }
     }
 }
