@@ -628,8 +628,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 771582482}
-  killMultiplier: 1.25
-  killTimer: 3
+  killMultiplier: 1.3
+  killTimer: 1.4
   CurrentSpeedBoost: 0
 --- !u!208 &771582488
 NavMeshObstacle:

@@ -10,6 +10,7 @@ public class MothmanUtils : EnemyUtils
     private void Update()
     {
        DeathCheck(); 
+       OnOneShot();
     }
 
     private void Awake()
@@ -24,6 +25,12 @@ public class MothmanUtils : EnemyUtils
             Death();
             EntitiesManager.instance.CallEnemyDeathEvent();
         }
+    }
+
+    public void OnOneShot()
+    {
+        if (health == 10)
+            GetComponent<Renderer>().material.color = Color.red;
     }
 
     private void Death()

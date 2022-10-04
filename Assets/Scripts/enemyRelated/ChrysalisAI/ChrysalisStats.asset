@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1a5fbecee3f614bb34d4733161f6f0, type: 3}
   m_Name: ChrysalisStats
   m_EditorClassIdentifier: 
-  lookRange: 100
+  lookRange: 50
   lookSphereCastRadius: 1
-  attackRange: 1
+  attackRange: 20
   attackRate: 1
   attackDamage: 50
   health: 100
