@@ -72,7 +72,6 @@ public class mothmanController : MonoBehaviour
     private void Update()
     {
         _stateMachine.Tick();
-        print(PlayerLocation.position);
     }
     public void RotateToDirection(Vector3 direction)
     {

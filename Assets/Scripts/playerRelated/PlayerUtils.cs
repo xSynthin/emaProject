@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,13 +48,18 @@ public class PlayerUtils : MonoBehaviour
             //Destroy(gameObject);
         }
     }
-    private void handlePlayerSpawn()
+    public void handlePlayerSpawn()
     {
         Scene scene = SceneManager.GetActiveScene();
         if(SceneSpawningPointList.Count > 0)
         {
             transform.position = SceneSpawningPointListDict[scene.name].position;
         }
+    }
+
+    public void LevelPositionChange(string nextLevel)
+    {
+        transform.position = SceneSpawningPointListDict[nextLevel].position;
     }
     private void TakeDamage(float dmgToTake) => hp -= dmgToTake;
     public void decreaseAmmo(int ammoToDecrease) => ammo -= ammoToDecrease;

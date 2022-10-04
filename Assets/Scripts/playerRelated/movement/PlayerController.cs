@@ -75,20 +75,25 @@ public class PlayerController : MonoBehaviour
         // somewhere here should be sound effect
         // slope
         rb.useGravity = !onSlope();
-        if (onSlope() && !slopeExit)
+        if (onSlope() && !slopeExit && grounded)
         {
-            rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10f * (1-slopeAngle/100+0.1f)*2));
-            if(rb.velocity.y > 0)
+            rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10 * 1.5f));
+            if (rb.velocity.y > 0)
+            {
                 rb.AddForce(Vector3.down * 200f);
+            }
         }
-        if(grounded && slopeAngle > maxSlopeAngle)
-            rb.AddForce(Vector3.down * 1000f);
-        if (grounded && slopeAngle < maxSlopeAngle)
+
+        if (!onSlope() && !grounded && slopeAngle > maxSlopeAngle)
+        {
+            rb.velocity = new Vector3(0, -4f,0);
+        }
+        if (grounded && !onSlope())
         {
             rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
         }
         // skok
-        else if (!grounded && slopeAngle < maxSlopeAngle) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
+        else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
     }
     private void SpeedControl()
     {
@@ -119,19 +124,12 @@ public class PlayerController : MonoBehaviour
 
     private bool onSlope()
     {
-        if (checkSlope() < maxSlopeAngle && checkSlope() != 0)
-            return true;
-        return false;
-    }
-
-    private float checkSlope()
-    {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return slopeAngle;
+            return slopeAngle < maxSlopeAngle && slopeAngle != 0;
         }
-        return 0;
+        return false;
     }
     private Vector3 GetSlopeMoveDirection()
     {

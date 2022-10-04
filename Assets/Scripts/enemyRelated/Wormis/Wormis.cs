@@ -3,19 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestingEnemy : EnemyUtils
+public class Wormis : EnemyUtils
 {
-    public float health;
-    [HideInInspector] public float startHealth;
-
-    private void Start()
+    [HideInInspector] public float health;
+    public EnemyStats wormisStats;
+    private void Awake()
     {
-        startHealth = health;
+        health = wormisStats.health;
     }
 
     private void Update()
     {
-        DeathCheck(); 
+        DeathCheck();
     }
 
     public override void DeathCheck()
@@ -28,7 +27,10 @@ public class TestingEnemy : EnemyUtils
     }
     private void Death()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
-    public override void TakeDamage(int hpToTake) => health -= hpToTake;
+    public override void TakeDamage(int hpToTake)
+    {
+        health -= hpToTake;
+    }
 }
