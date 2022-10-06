@@ -12,7 +12,7 @@ public class PlayerWeaponAnimationHandler : MonoBehaviour
         AnimationManager.instance.PlayerShootEvent += PlayerShootAnimation;
         AnimationManager.instance.PlayerReloadEvent += PlayerReloadingAnimation;
         EntitiesManager.instance.EnemyDeathEvent += SpeedUpAnimation;
-        EntitiesManager.instance.EnemyDeathEvent += ResetAnimationSpeed;
+        PlayerManager.instance.OnBoostStopEvent += ResetAnimationSpeed;
     }
     void PlayerShootAnimation(string aName)
     {

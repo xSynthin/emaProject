@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PFragSpeedMultiplier : MonoBehaviour
 {
     [Header("Assignables")]
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private VisualEffect speedGraph;
+    [SerializeField] private float minEffectSpeed;
     [Header("Frag Multiplier Variables")]
     [SerializeField] private float killMultiplier;
     [SerializeField] private float killTimer;
@@ -43,6 +46,13 @@ public class PFragSpeedMultiplier : MonoBehaviour
         }
     }
 
+    void checkParticles()
+    {
+        if(playerController.moveSpeed > minEffectSpeed)
+            speedGraph.gameObject.SetActive(true);
+        else
+            speedGraph.gameObject.SetActive(false);
+    }
     void Boost()
     {
         SpeedBoostState();
@@ -52,12 +62,20 @@ public class PFragSpeedMultiplier : MonoBehaviour
     {
         unBoostMoveSpeed();
         SpeedBoostState();
+        PlayerManager.instance.CallBoostStopEvent();
     }
     void Start()
     {
         baseMoveSpeed = playerController.moveSpeed;
         EntitiesManager.instance.EnemyDeathEvent += Booster;
+        speedGraph.gameObject.SetActive(false);
     }
+
+    private void Update()
+    {
+        checkParticles();
+    }
+
     void Booster()
     {
         if (playerController.moveSpeed < SpeedStagesVals[PlayerCollections.SpeedStages.boosted5])
