@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10 * 1.5f));
             if (rb.velocity.y > 0)
             {
-                rb.AddForce(Vector3.down * 200f);
+                rb.AddForce(Vector3.down * 100f);
             }
         }
 

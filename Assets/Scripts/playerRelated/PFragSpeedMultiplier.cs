@@ -13,6 +13,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
     private float baseMoveSpeed;
     public PlayerCollections.SpeedStages CurrentSpeedBoost = PlayerCollections.SpeedStages.normal;
     [HideInInspector] public Dictionary<PlayerCollections.SpeedStages, float> SpeedStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
+    private Dictionary<PlayerCollections.SpeedStages, Color> ColorStages;
     private void Awake()
     {
         // this should be cleaned TODO
@@ -24,6 +25,14 @@ public class PFragSpeedMultiplier : MonoBehaviour
         SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted4, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 4)));
         SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted5, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 5)));
         //---------------------------------------------------------------------
+        ColorStages = new Dictionary<PlayerCollections.SpeedStages, Color>()
+        {
+            {PlayerCollections.SpeedStages.normal, Color.gray},
+            {PlayerCollections.SpeedStages.boosted1, Color.yellow},
+            {PlayerCollections.SpeedStages.boosted2, Color.cyan},
+            {PlayerCollections.SpeedStages.boosted3, Color.red},
+            {PlayerCollections.SpeedStages.boosted4, Color.magenta},
+        };
     }
     void SpeedBoostState()
     {
@@ -33,46 +42,58 @@ public class PFragSpeedMultiplier : MonoBehaviour
                 CurrentSpeedBoost = entry.Key;
         }
     }
+
+    void Boost()
+    {
+        SpeedBoostState();
+        boostMoveSpeed();
+    }
+    void UnBoost()
+    {
+        unBoostMoveSpeed();
+        SpeedBoostState();
+    }
     void Start()
     {
         baseMoveSpeed = playerController.moveSpeed;
-        EntitiesManager.instance.EnemyDeathEvent += KillAchevied;
-        PlayerManager.instance.playerSpeedBoostActivateEvent += boostMoveSpeed;
-        PlayerManager.instance.playerSpeedBoostActivateEvent += boostAirControl;
-        PlayerManager.instance.playerSpeedBoostDeactivateEvent += unBoostAirControl;
-        PlayerManager.instance.playerSpeedBoostDeactivateEvent += unBoostMoveSpeed;
-        PlayerManager.instance.playerSpeedBoostActivateEvent += SpeedBoostState;
-        PlayerManager.instance.playerSpeedBoostDeactivateEvent += SpeedBoostState;
+        EntitiesManager.instance.EnemyDeathEvent += Booster;
     }
-    void KillAchevied()
+    void Booster()
     {
         if (playerController.moveSpeed < SpeedStagesVals[PlayerCollections.SpeedStages.boosted5])
         {
             StopAllCoroutines();
-            StartCoroutine(UIManager.instance.CountDownTime(killTimer));
             StartCoroutine(SpeedBuff());
+            UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(killTimer, ColorStages[CurrentSpeedBoost]);
         }
         else
         {
             StopAllCoroutines();
-            StartCoroutine(UIManager.instance.CountDownTime(killTimer));
             StartCoroutine(MaxSpeedBuff());
+            UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(killTimer, ColorStages[CurrentSpeedBoost]);
         }
     }
 
     IEnumerator MaxSpeedBuff()
     {
         yield return new WaitForSeconds(killTimer);
-        PlayerManager.instance.CallPlayerSpeedBoostDeactivateEvent();
+        UnBoost();
     }
     IEnumerator SpeedBuff()
     {
-        PlayerManager.instance.CallPlayerSpeedBoostActivateEvent();
+        Boost();
         yield return new WaitForSeconds(killTimer);
-        PlayerManager.instance.CallPlayerSpeedBoostDeactivateEvent();
+        UnBoost();
     }
-    private void boostMoveSpeed() => playerController.moveSpeed *= killMultiplier;
-    private void unBoostMoveSpeed() => playerController.moveSpeed = baseMoveSpeed;
-    private void boostAirControl() => playerController.airMultiplier += 0.05f;
-    private void unBoostAirControl() => playerController.airMultiplier -= 0.05f;
+
+    private void boostMoveSpeed()
+    {
+        playerController.moveSpeed *= killMultiplier;
+        playerController.airMultiplier += 0.05f;
+    }
+    private void unBoostMoveSpeed()
+    {
+        playerController.moveSpeed = baseMoveSpeed;
+        playerController.airMultiplier -= 0.05f;
+    }
 }

@@ -11,8 +11,8 @@ public class PlayerWeaponAnimationHandler : MonoBehaviour
         animator = GetComponent<Animator>();
         AnimationManager.instance.PlayerShootEvent += PlayerShootAnimation;
         AnimationManager.instance.PlayerReloadEvent += PlayerReloadingAnimation;
-        PlayerManager.instance.playerSpeedBoostActivateEvent += SpeedUpAnimation;
-        PlayerManager.instance.playerSpeedBoostDeactivateEvent += ResetAnimationSpeed;
+        EntitiesManager.instance.EnemyDeathEvent += SpeedUpAnimation;
+        EntitiesManager.instance.EnemyDeathEvent += ResetAnimationSpeed;
     }
     void PlayerShootAnimation(string aName)
     {
