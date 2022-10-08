@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     float verticalInput;
     [Header("Assignable")]
     public Transform orientation;
-    Vector3 moveDirection;
+    [HideInInspector] public Vector3 moveDirection;
     internal Rigidbody rb;
     [Header("Slope")] 
     public float maxSlopeAngle;

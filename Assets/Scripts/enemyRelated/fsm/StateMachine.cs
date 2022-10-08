@@ -21,7 +21,6 @@ public class StateMachine
       
       _currentState?.Tick();
    }
-
    public void SetState(IState state)
    {
       if (state == _currentState)

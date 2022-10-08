@@ -320,7 +320,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000076
-  m_Speed: 3.5
+  m_Speed: 12
   m_Acceleration: 20
   avoidancePriority: 99
   m_AngularSpeed: 500
@@ -344,10 +344,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5178a87a90aca549b2eb80682fa6f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerLocation: {fileID: 0}
+  PlayerLocation: {x: 0, y: 0, z: 0}
   mothmanStats: {fileID: 11400000, guid: 3f976f547ff78b749be9c1d700c47004, type: 2}
   mothmanUtils: {fileID: 2647771586212152380}
-  maxDistanceToWaypoint: 20
 --- !u!1 &2647771586619456050
 GameObject:
   m_ObjectHideFlags: 0

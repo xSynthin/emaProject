@@ -550,6 +550,7 @@ MonoBehaviour:
     m_Bits: 8
   grounded: 0
   orientation: {fileID: 2052976186}
+  moveDirection: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 50
 --- !u!54 &771582483
 Rigidbody:
@@ -973,7 +974,7 @@ MonoBehaviour:
   orientation: {fileID: 2052976186}
   camHolder: {fileID: 2143072470}
   pController: {fileID: 771582482}
-  camT: {fileID: 1579632182}
+  camT: {fileID: 1579632181}
 --- !u!1 &1867117181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,6 +1082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482587155628684999, guid: b59e1e07a230d7b45aaa1b53e005abc0,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b59e1e07a230d7b45aaa1b53e005abc0, type: 3}

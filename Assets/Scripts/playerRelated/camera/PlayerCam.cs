@@ -14,7 +14,7 @@ public class PlayerCam : MonoBehaviour
     public PlayerController pController;
     float xRotation;
     float yRotation;
-    public Transform camT;
+    public Camera camT;
     private Vector3 bobVector;
     private void Start()
     {
@@ -34,6 +34,7 @@ public class PlayerCam : MonoBehaviour
         camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         CameraSway();
+        DynamicFOV();
     }
 
     private void CameraSway()
@@ -45,18 +46,29 @@ public class PlayerCam : MonoBehaviour
         {
             HeadBob(counter, 0.05f, 0.05f);
             counter += Time.deltaTime * pController.moveSpeed / 2f;
-            camT.localPosition = Vector3.Lerp(camT.localPosition, bobVector, Time.deltaTime * 6f);
+            camT.transform.localPosition = Vector3.Lerp(camT.transform.localPosition, bobVector, Time.deltaTime * 6f);
         }
         else
         {
             HeadBob(idleCounter, 0.025f, 0.025f);
             idleCounter += Time.deltaTime;
-            camT.localPosition = Vector3.Lerp(camT.localPosition, bobVector, Time.deltaTime * 2f);
+            camT.transform.localPosition = Vector3.Lerp(camT.transform.localPosition, bobVector, Time.deltaTime * 2f);
         }
-        // TODO change camera rotation while strafing/running in other dirs that forward/backward
+        // TODO change camera rotation while strafing/running in other dirs than forward/backward
     }
     private void HeadBob(float period, float vAmplitude, float hAmplitude)
     {
-        bobVector = new Vector3(Mathf.Cos(period) * vAmplitude, Mathf.Sin(period*2) * hAmplitude, camT.localPosition.z);
+        bobVector = new Vector3(Mathf.Cos(period) * vAmplitude, Mathf.Sin(period*2) * hAmplitude, camT.transform.localPosition.z);
+    }
+    void DynamicFOV()
+    {
+        if (PlayerManager.instance.playerSpeedBoostScript.CurrentSpeedBoost != PlayerCollections.SpeedStages.normal)
+        {
+            camT.fieldOfView = Mathf.Lerp(camT.fieldOfView, 90, 10f * Time.deltaTime);
+        }
+        else
+        {
+            camT.fieldOfView = Mathf.Lerp(camT.fieldOfView, 80, 10f * Time.deltaTime);
+        }
     }
 }

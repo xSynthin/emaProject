@@ -1,29 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChasePlayer : IState
+public class PlayerScanner : IState
 {
     private readonly mothmanController _mothmanController;
     private readonly NavMeshAgent _navMeshAgent;
-
-    public ChasePlayer(mothmanController mothmanController, NavMeshAgent navMeshAgent)
+    public PlayerScanner(mothmanController mothmanController, NavMeshAgent navMeshAgent)
     {
         _mothmanController = mothmanController;
         _navMeshAgent = navMeshAgent;
     }
-    public void Tick()
-    {
-    }
+    public void Tick() {}
     public void OnEnter()
     {
-        _navMeshAgent.enabled = true;
-        _navMeshAgent.SetDestination(_mothmanController.PlayerLocation);
     }
-
     public void OnExit()
     {
-        _navMeshAgent.enabled = false;
+        _mothmanController.PlayerLocation = PlayerManager.instance.playerUtils.transform.position;
     }
 }

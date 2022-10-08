@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - Level0
+  - Playground
   - PlayerScene
   - UIScene
 --- !u!850595691 &1764970316

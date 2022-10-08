@@ -19,22 +19,23 @@ public class PFragSpeedMultiplier : MonoBehaviour
     private Dictionary<PlayerCollections.SpeedStages, Color> ColorStages;
     private void Awake()
     {
+        baseMoveSpeed = playerController.moveSpeed;
         // this should be cleaned TODO
         //--------------------------------------------------------------------
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.normal, playerController.moveSpeed);
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted1, playerController.moveSpeed * killMultiplier);
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted2, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 2)));
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted3, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 3)));
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted4, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 4)));
-        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted5, (playerController.moveSpeed * Mathf.Pow(killMultiplier, 5)));
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.normal, baseMoveSpeed);
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted1, baseMoveSpeed * killMultiplier);
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted2, (baseMoveSpeed * Mathf.Pow(killMultiplier, 2)));
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted3, (baseMoveSpeed * Mathf.Pow(killMultiplier, 3)));
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted4, (baseMoveSpeed * Mathf.Pow(killMultiplier, 4)));
+        SpeedStagesVals.Add(PlayerCollections.SpeedStages.boosted5, (baseMoveSpeed * Mathf.Pow(killMultiplier, 5)));
         //---------------------------------------------------------------------
         ColorStages = new Dictionary<PlayerCollections.SpeedStages, Color>()
         {
-            {PlayerCollections.SpeedStages.normal, Color.gray},
-            {PlayerCollections.SpeedStages.boosted1, Color.yellow},
-            {PlayerCollections.SpeedStages.boosted2, Color.cyan},
-            {PlayerCollections.SpeedStages.boosted3, Color.red},
-            {PlayerCollections.SpeedStages.boosted4, Color.magenta},
+            {PlayerCollections.SpeedStages.boosted1, Color.cyan},
+            {PlayerCollections.SpeedStages.boosted2, Color.yellow},
+            {PlayerCollections.SpeedStages.boosted3, Color.cyan},
+            {PlayerCollections.SpeedStages.boosted4, Color.red},
+            {PlayerCollections.SpeedStages.boosted5, Color.magenta},
         };
     }
     void SpeedBoostState()
@@ -48,15 +49,15 @@ public class PFragSpeedMultiplier : MonoBehaviour
 
     void checkParticles()
     {
-        if(playerController.moveSpeed > minEffectSpeed)
+        if(playerController.moveSpeed > minEffectSpeed && playerController.moveDirection != Vector3.zero)
             speedGraph.gameObject.SetActive(true);
         else
             speedGraph.gameObject.SetActive(false);
     }
     void Boost()
     {
-        SpeedBoostState();
         boostMoveSpeed();
+        SpeedBoostState();
     }
     void UnBoost()
     {
@@ -66,7 +67,6 @@ public class PFragSpeedMultiplier : MonoBehaviour
     }
     void Start()
     {
-        baseMoveSpeed = playerController.moveSpeed;
         EntitiesManager.instance.EnemyDeathEvent += Booster;
         speedGraph.gameObject.SetActive(false);
     }

@@ -61,6 +61,11 @@ public class PlayerUtils : MonoBehaviour
     {
         transform.position = SceneSpawningPointListDict[nextLevel].position;
     }
-    private void TakeDamage(float dmgToTake) => hp -= dmgToTake;
+    public void TakeDamage(float dmgToTake)
+    {
+        hp -= dmgToTake;
+        UIManager.instance.CallPlayerHpChangeEvent();
+    }
+
     public void decreaseAmmo(int ammoToDecrease) => ammo -= ammoToDecrease;
 }
