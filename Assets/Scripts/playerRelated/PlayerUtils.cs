@@ -18,7 +18,7 @@ public class PlayerUtils : MonoBehaviour
     [SerializeField] private Dictionary<String, Transform> SceneSpawningPointListDict = new Dictionary<string, Transform>();
     [HideInInspector] public int ammoMax;
     [HideInInspector] public float defaultReloadTime;
-
+    public bool debug;
     private void Awake()
     {
         foreach (var kvp in SceneSpawningPointList)
@@ -37,6 +37,11 @@ public class PlayerUtils : MonoBehaviour
     private void Update()
     {
         PlayerDeath();
+        if (debug)
+        {
+            DebugSpeed();
+            DebugEnemy();
+        }
     }
 
     private void PlayerDeath()
@@ -66,6 +71,24 @@ public class PlayerUtils : MonoBehaviour
         hp -= dmgToTake;
         UIManager.instance.CallPlayerHpChangeEvent();
     }
-
     public void decreaseAmmo(int ammoToDecrease) => ammo -= ammoToDecrease;
+    public void DebugSpeed()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            EntitiesManager.instance.CallEnemyDeathEvent();
+        }
+    }
+
+    public void DebugEnemy()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(GetComponent<PlayerGunScript>().shootPosition.position, GetComponent<PlayerGunScript>().shootPosition.forward, out hit, 100) && !hit.collider.CompareTag("Hide"))
+            {
+                Instantiate(EntitiesManager.instance.mothManPrefab, hit.point, Quaternion.identity);
+            }
+        }
+    }
 }

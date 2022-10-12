@@ -185,6 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8509909614a94b64eaa9c166ce478d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mothManPrefab: {fileID: 2647771586212152327, guid: 4100882f0bab9da4983fd8a18424f26b,
+    type: 3}
 --- !u!4 &444673645
 Transform:
   m_ObjectHideFlags: 0
@@ -590,6 +592,7 @@ MonoBehaviour:
     value: {fileID: 1100746608}
   ammoMax: 0
   defaultReloadTime: 0
+  debug: 1
 --- !u!114 &771582486
 MonoBehaviour:
   m_ObjectHideFlags: 0

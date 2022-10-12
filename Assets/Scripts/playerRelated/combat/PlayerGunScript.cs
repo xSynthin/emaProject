@@ -9,7 +9,7 @@ public class PlayerGunScript : MonoBehaviour
     [Header("Assignable")]
     [SerializeField] private Transform weaponPosition;
     [SerializeField] private GameObject gunPrefab;
-    [SerializeField] private Transform shootPosition;
+    [SerializeField] public Transform shootPosition;
     [SerializeField] private KeyCode shootKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
     [SerializeField] private ParticleSystem shotImpactParticleSystem;
