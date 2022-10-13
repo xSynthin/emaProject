@@ -27,7 +27,6 @@ public class PlayerUtils : MonoBehaviour
 
     private void Start()
     {
-        PlayerManager.instance.playerDamageTakenEvent += TakeDamage;
         defaultReloadTime = reloadTime;
         ammoMax = ammo;
         // this should be moved to on level change event 
@@ -50,7 +49,7 @@ public class PlayerUtils : MonoBehaviour
         {
             PlayerManager.instance.CallPlayerDeathEvent();
             // TODO DEATH HANDLING DESIGN
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
     public void handlePlayerSpawn()

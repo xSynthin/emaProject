@@ -88,9 +88,4 @@ public class mothmanController : MonoBehaviour
         //print(_stateMachine._currentState);
         _stateMachine.Tick();
     }
-    public void RotateToDirection(Vector3 direction)
-    {
-        Vector3 rotation = Quaternion.LookRotation(direction).eulerAngles;
-        transform.localEulerAngles = new Vector3(0, rotation.y, 0);
-    }
 }

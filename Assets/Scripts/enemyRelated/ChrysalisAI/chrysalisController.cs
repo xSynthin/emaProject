@@ -8,59 +8,49 @@ public class chrysalisController : MonoBehaviour
 {
     private StateMachine _stateMachine;
     [HideInInspector] public Transform PlayerLocation;
-    public EnemyStats ChrysalisStats;
+    public LineRenderer chrysalisShootTracer;
+    public Transform shootPosition;
     public ChrysalisUtils chrysalisUtils;
-    private ChrysalisFollowPlayer chasePlayer;
-    private ChrysalisAttack chrysalisAttack;
-    private ChrysalisDistanceKeeper chrysalisDistanceKeeper;
+    private Idle idleChrysalis;
+    private Follow followPlayer;
+    private Attack attackPlayer;
+    public float shotCooldownMultiplier = 0.055f;
     private void Awake()
     {
         var navMeshAgent = GetComponent<NavMeshAgent>();
+        idleChrysalis = new Idle();
+        followPlayer = new Follow(this, navMeshAgent);
+        attackPlayer = new Attack(this);
         _stateMachine = new StateMachine();
-        chasePlayer = new ChrysalisFollowPlayer(this, navMeshAgent);
-        chrysalisAttack = new ChrysalisAttack(this, navMeshAgent);
-        chrysalisDistanceKeeper = new ChrysalisDistanceKeeper(this, navMeshAgent);
-        _stateMachine.AddAnyTransition(chasePlayer, PlayerInSight());
-        _stateMachine.AddAnyTransition(chasePlayer, HasBeenAttacked());
-        _stateMachine.AddAnyTransition(chrysalisAttack, PlayerInAttackRange());
-        _stateMachine.AddAnyTransition(chrysalisDistanceKeeper, PlayerTooClose());
-        //void At(IState to, IState from, Func<bool> condition) => _stateMachine.AddTransition(to, from, condition);
+        _stateMachine.AddTransition(idleChrysalis, followPlayer,PlayerInSight());
+        _stateMachine.AddTransition(idleChrysalis, followPlayer, HasBeenAttacked());
+        _stateMachine.AddTransition(followPlayer, attackPlayer, PlayerInAttackRange());
+        _stateMachine.AddTransition(attackPlayer, followPlayer, PlayerNotInAttackRange());
+        _stateMachine.SetState(idleChrysalis);
     }
 
     Func<bool> PlayerInSight() => () =>
     {
         RaycastHit hit;
-        if (PlayerLocation.position != Vector3.zero)
+        if (Physics.Raycast(transform.position, (PlayerLocation.position - transform.position).normalized,
+                out hit,
+                chrysalisUtils.chrysalisStats.lookRange) && hit.collider.CompareTag("Player") && PlayerInAttackRange().Invoke() == false)
         {
-            RotateToDirection(PlayerLocation.position);
-            if (Physics.Raycast(transform.position, (PlayerLocation.position - transform.position).normalized,
-                    out hit,
-                    ChrysalisStats.lookRange) && hit.collider.CompareTag("Player") &&
-                PlayerInAttackRange().Invoke() == false && PlayerTooClose().Invoke() == false)
-            {
-                return true;
-            }
+            return true;
         }
-
         return false;
     };
+    Func<bool> PlayerNotInAttackRange() => () => !PlayerInAttackRange().Invoke();
     Func<bool> HasBeenAttacked() => () =>
     {
-        if (chrysalisUtils.health < ChrysalisStats.health && PlayerInAttackRange().Invoke() == false && PlayerTooClose().Invoke() == false)
+        if (chrysalisUtils.health < chrysalisUtils.chrysalisStats.health && PlayerInAttackRange().Invoke() == false)
             return true;
-        return false;
-    };
-    Func<bool> PlayerTooClose() => () =>
-    {
-        if (PlayerLocation.position != Vector3.zero)
-            if (Vector3.Distance(PlayerLocation.position, transform.position) <= ChrysalisStats.attackRange / 1.3)
-                return true;
         return false;
     };
     Func<bool> PlayerInAttackRange() => () =>
     {
         if (PlayerLocation.position != Vector3.zero)
-            if (Vector3.Distance(PlayerLocation.position, transform.position) <= ChrysalisStats.attackRange && PlayerTooClose().Invoke() == false)
+            if (Vector3.Distance(PlayerLocation.position, transform.position) <= chrysalisUtils.chrysalisStats.attackRange)
             {
                 return true;
             }
@@ -79,5 +69,14 @@ public class chrysalisController : MonoBehaviour
     {
         Vector3 rotation = Quaternion.LookRotation(direction).eulerAngles;
         transform.localEulerAngles = new Vector3(0, rotation.y, 0);
+    }
+    public void SpawnBulletTrail(Vector3 point)
+    {
+        Vector3 position = shootPosition.position;
+        GameObject bulletTrail = Instantiate(chrysalisShootTracer.gameObject, position, Quaternion.identity);
+        LineRenderer lineTrail = bulletTrail.GetComponent<LineRenderer>();
+        lineTrail.SetPosition(0, position);
+        lineTrail.SetPosition(1, point);
+        Destroy(bulletTrail, 0.2f);
     }
 }

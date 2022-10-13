@@ -133,7 +133,6 @@ public class PlayerController : MonoBehaviour
             slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return slopeAngle < maxSlopeAngle && slopeAngle != 0;
         }
-        print(slopeAngle);
         return false;
     }
     private Vector3 GetSlopeMoveDirection()
