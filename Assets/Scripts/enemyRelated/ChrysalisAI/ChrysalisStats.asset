@@ -17,7 +17,7 @@ MonoBehaviour:
   attackRange: 20
   attackRate: 1
   attackDamage: 50
-  health: 100
+  health: 50
   attacked: 0
   chaseSpeed: 6
   patrolSpeed: 3

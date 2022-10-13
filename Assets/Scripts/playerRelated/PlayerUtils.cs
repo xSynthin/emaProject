@@ -57,7 +57,12 @@ public class PlayerUtils : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         if(SceneSpawningPointList.Count > 0)
         {
-            transform.position = SceneSpawningPointListDict[scene.name].position;
+            for(int i = 0; i < SceneManager.sceneCount; i++)
+                foreach (var element in SceneSpawningPointListDict)
+                {
+                    if (SceneManager.GetSceneAt(i) == SceneManager.GetSceneByName(element.Key))
+                        transform.position = element.Value.position;
+                }
         }
     }
 
