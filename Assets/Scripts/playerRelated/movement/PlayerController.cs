@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -86,7 +88,8 @@ public class PlayerController : MonoBehaviour
 
         if (!onSlope() && !grounded && slopeAngle > maxSlopeAngle)
         {
-            rb.velocity = new Vector3(0, -4f,0);
+            if(Physics.Raycast(transform.position, transform.forward, 2, groundLayer))
+                rb.velocity = new Vector3(0, -4f,0);
         }
         if (grounded && !onSlope())
         {
@@ -124,11 +127,13 @@ public class PlayerController : MonoBehaviour
 
     private bool onSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, 100))
         {
+            //playerHeight * 0.5f + 0.3f
             slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return slopeAngle < maxSlopeAngle && slopeAngle != 0;
         }
+        print(slopeAngle);
         return false;
     }
     private Vector3 GetSlopeMoveDirection()
