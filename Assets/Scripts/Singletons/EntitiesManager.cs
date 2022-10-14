@@ -8,6 +8,7 @@ public class EntitiesManager : MonoBehaviour
     public static EntitiesManager instance;
     [SerializeField] public GameObject mothManPrefab;
     public event Action EnemyDeathEvent;
+    [SerializeField] public EnemyStats chrysalisStats;
     private void Awake()
     {
         instance = this;

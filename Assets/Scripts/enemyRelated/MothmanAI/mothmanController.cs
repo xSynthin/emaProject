@@ -85,7 +85,6 @@ public class mothmanController : MonoBehaviour
 
     private void Update()
     {
-        //print(_stateMachine._currentState);
         _stateMachine.Tick();
     }
 }

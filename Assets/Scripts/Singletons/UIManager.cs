@@ -12,17 +12,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerAmmo;
     [SerializeField] private TextMeshProUGUI playerHp;
     [SerializeField] private TextMeshProUGUI gameTimeUI;
+    [SerializeField] private List<Transform> ammoUI = new List<Transform>();
     public Image SpeedSlider;
     public event Action playerAmmoChange;
     public event Action PlayerHPChange;
-    private int ammo;
-    private int ammoMax;
     private float gameTime;
     private void Awake()
     {
         instance = this;
-        GManager.instance.onGameStartEvent += RepaintPlayerAmmo;
+        // GManager.instance.onGameStartEvent += RepaintPlayerAmmo;
         GManager.instance.onGameStartEvent += RepaintPlayerHP;
+        playerAmmoChange += UpdateAmmoUI;
     }
     public IEnumerator timer()
     {
@@ -37,11 +37,27 @@ public class UIManager : MonoBehaviour
     {
         PlayerHPChange += RepaintPlayerHP;
         StartCoroutine(timer());
-        playerAmmoChange += RepaintPlayerAmmo;
+        //playerAmmoChange += RepaintPlayerAmmo;
     }
     private void RepaintPlayerHP()
     {
         playerHp.text = $"HP: {PlayerManager.instance.playerUtils.hp}";
+    }
+
+    private void UpdateAmmoUI()
+    {
+        if (PlayerManager.instance.playerUtils.ammo == PlayerManager.instance.playerUtils.ammoMax)
+        {
+            foreach (Transform child in ammoUI)
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            //print(ammoUI[PlayerManager.instance.playerUtils.ammo]);
+            ammoUI[PlayerManager.instance.playerUtils.ammo].gameObject.SetActive(false);
+        }
     }
     private void RepaintGameTime()
     {
@@ -50,9 +66,9 @@ public class UIManager : MonoBehaviour
     }
 
     public void CallPlayerHpChangeEvent() => PlayerHPChange?.Invoke();
-    private void RepaintPlayerAmmo()
-    {
-        playerAmmo.text = $"Ammo: {PlayerManager.instance.playerUtils.ammo}/{PlayerManager.instance.playerUtils.ammoMax}";
-    }
+    // private void RepaintPlayerAmmo()
+    // {
+    //     playerAmmo.text = $"Ammo: {PlayerManager.instance.playerUtils.ammo}/{PlayerManager.instance.playerUtils.ammoMax}";
+    // }
     public void CallPlayerAmmoChangeEvent() => playerAmmoChange?.Invoke();
 }

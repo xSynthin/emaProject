@@ -16,9 +16,12 @@ public class PlayerUtils : MonoBehaviour
     [SerializeField] public float reloadTime;
     public List<KeyValuePair> SceneSpawningPointList;
     [SerializeField] private Dictionary<String, Transform> SceneSpawningPointListDict = new Dictionary<string, Transform>();
+    [HideInInspector] public Dictionary<float, List<float>> chrysalisAttackRanges = new Dictionary<float, List<float>>();
     [HideInInspector] public int ammoMax;
     [HideInInspector] public float defaultReloadTime;
     public bool debug;
+    public bool playerOneShot = false;
+    [HideInInspector] public bool isDead = false;
     private void Awake()
     {
         foreach (var kvp in SceneSpawningPointList)
@@ -31,6 +34,14 @@ public class PlayerUtils : MonoBehaviour
         ammoMax = ammo;
         // this should be moved to on level change event 
         handlePlayerSpawn();
+        chrysalisAttackRanges = new Dictionary<float, List<float>>()
+        {
+            {40, new List<float>(){2, 5}},
+            {30, new List<float>(){1.25f, 10}},
+            {20, new List<float>(){0.5f, 20}},
+            {7, new List<float>(){0.03f, 300}},
+            {0, new List<float>(){0, 500}},
+        };
     }
 
     private void Update()
@@ -49,8 +60,14 @@ public class PlayerUtils : MonoBehaviour
         {
             PlayerManager.instance.CallPlayerDeathEvent();
             // TODO DEATH HANDLING DESIGN
-            Destroy(gameObject);
+            print("DEAD");
         }
+        else if(playerOneShot)
+            if (isDead)
+            {
+                PlayerManager.instance.CallPlayerDeathEvent();
+                //print("DEAD");
+            }
     }
     public void handlePlayerSpawn()
     {
@@ -65,7 +82,6 @@ public class PlayerUtils : MonoBehaviour
                 }
         }
     }
-
     public void LevelPositionChange(string nextLevel)
     {
         transform.position = SceneSpawningPointListDict[nextLevel].position;
@@ -83,7 +99,6 @@ public class PlayerUtils : MonoBehaviour
             EntitiesManager.instance.CallEnemyDeathEvent();
         }
     }
-
     public void DebugEnemy()
     {
         if (Input.GetKeyDown(KeyCode.F))

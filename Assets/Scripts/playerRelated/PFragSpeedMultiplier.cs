@@ -14,6 +14,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
     [SerializeField] private float killMultiplier;
     [SerializeField] private float killTimer;
     private float baseMoveSpeed;
+    private float radius = 2;
     public PlayerCollections.SpeedStages CurrentSpeedBoost = PlayerCollections.SpeedStages.normal;
     [HideInInspector] public Dictionary<PlayerCollections.SpeedStages, float> SpeedStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
     private Dictionary<PlayerCollections.SpeedStages, Color> ColorStages;

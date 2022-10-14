@@ -14,7 +14,7 @@ public class chrysalisController : MonoBehaviour
     private Idle idleChrysalis;
     private Follow followPlayer;
     private Attack attackPlayer;
-    public float shotCooldownMultiplier = 0.055f;
+    public float timeBetweenShots = 0.7f;
     private void Awake()
     {
         var navMeshAgent = GetComponent<NavMeshAgent>();
@@ -24,6 +24,7 @@ public class chrysalisController : MonoBehaviour
         _stateMachine = new StateMachine();
         _stateMachine.AddTransition(idleChrysalis, followPlayer,PlayerInSight());
         _stateMachine.AddTransition(idleChrysalis, followPlayer, HasBeenAttacked());
+        _stateMachine.AddTransition(idleChrysalis, attackPlayer, PlayerInAttackRange());
         _stateMachine.AddTransition(followPlayer, attackPlayer, PlayerInAttackRange());
         _stateMachine.AddTransition(attackPlayer, followPlayer, PlayerNotInAttackRange());
         _stateMachine.SetState(idleChrysalis);

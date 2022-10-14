@@ -593,6 +593,8 @@ MonoBehaviour:
   ammoMax: 0
   defaultReloadTime: 0
   debug: 1
+  playerOneShot: 1
+  isDead: 0
 --- !u!114 &771582486
 MonoBehaviour:
   m_ObjectHideFlags: 0

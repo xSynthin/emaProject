@@ -1619,7 +1619,7 @@ GameObject:
   - component: {fileID: 588578554}
   m_Layer: 0
   m_Name: Chrysalis
-  m_TagString: Enemy
+  m_TagString: Chrysalis
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1757,6 +1757,8 @@ MonoBehaviour:
   shootPosition: {fileID: 1160764270}
   chrysalisUtils: {fileID: 588578552}
   shotCooldownMultiplier: 0.055
+  timeBetweenShots: 0.7
+  distToPerfectAccuracy: 7
 --- !u!114 &588578554
 MonoBehaviour:
   m_ObjectHideFlags: 0

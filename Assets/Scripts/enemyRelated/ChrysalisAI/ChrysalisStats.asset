@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookRange: 50
   lookSphereCastRadius: 1
-  attackRange: 20
+  attackRange: 40
   attackRate: 1
   attackDamage: 50
-  health: 50
+  health: 300
   attacked: 0
   chaseSpeed: 6
   patrolSpeed: 3

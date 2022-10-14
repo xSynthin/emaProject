@@ -19,10 +19,13 @@ public class MothmanAttack : IState
         _navMeshAgent.enabled = true;
         if (canAttack)
         {
-            PlayerManager.instance.playerUtils.TakeDamage(3);
-            Debug.Log(PlayerManager.instance.playerUtils.hp);
-            canAttack = false;
-            _mothmanController.StartCoroutine(ResetAttack());
+            if (PlayerManager.instance.playerUtils.playerOneShot)
+                PlayerManager.instance.playerUtils.isDead = true;
+            else{
+                PlayerManager.instance.playerUtils.TakeDamage(3);
+                canAttack = false;
+                _mothmanController.StartCoroutine(ResetAttack());
+            }
         }
     }
 

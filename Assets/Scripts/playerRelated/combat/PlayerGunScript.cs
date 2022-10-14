@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
@@ -20,10 +21,33 @@ public class PlayerGunScript : MonoBehaviour
     [Header("Gun Vars")]
     [SerializeField] private int shotDistance;
     [SerializeField] private int attackDmg;
+    private Dictionary<float, float> chrysalisAttackRanges = new Dictionary<float, float>(); 
     void Start()
     {
         Instantiate(gunPrefab, weaponPosition.transform);
+        EntitiesManager.instance.EnemyDeathEvent += resetAmmo;
         StartCoroutine(ShootDelay());
+    }
+    public float getProperAccuracyDamageVal(float dir)
+    {
+        Dictionary<float, List<float>> attackRanges = PlayerManager.instance.playerUtils.chrysalisAttackRanges;
+        float attackRangeOffset = 0;
+        float index = 0;
+        foreach (var element in attackRanges)
+        {
+            if(index++ == 0)
+                attackRangeOffset = element.Key;
+            else
+            {
+                //Debug.Log($"{attackRangeOffset}:{element.Key}");
+                if ((dir < attackRangeOffset) && (dir > element.Key))
+                {
+                    return attackRanges[attackRangeOffset][1];
+                }
+                attackRangeOffset = element.Key;
+            }
+        }
+        return 1;
     }
     private void Shoot()
     {
@@ -33,12 +57,24 @@ public class PlayerGunScript : MonoBehaviour
         playerUtils.decreaseAmmo(1);
         if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide"))
         {
+            if (hit.transform.CompareTag("Chrysalis"))
+            {
+                float dir = (transform.position - hit.point).magnitude;
+                hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage((int)getProperAccuracyDamageVal(dir));
+                print((int)getProperAccuracyDamageVal(dir));
+            }
             if(hit.transform.CompareTag("Enemy"))
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage(attackDmg);
             GameObject impact = Instantiate(shotImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
             SpawnBulletTrail(hit.point);
             Destroy(impact, shotImpactParticleSystem.time + 0.5f);
         }
+    }
+
+    private void resetAmmo()
+    {
+        playerUtils.ammo = playerUtils.ammoMax;
+        UIManager.instance.CallPlayerAmmoChangeEvent();
     }
     private IEnumerator ShootDelay()
     {
