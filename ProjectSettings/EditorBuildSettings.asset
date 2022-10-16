@@ -15,9 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/UIScene.unity
     guid: e23326f7e2a08c64d9b41209d21f8ad7
   - enabled: 0
-    path: Assets/Scenes/Blockout.unity
+    path: 
     guid: f9bc4789f6160fe478f9611b89d39372
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 8f0f1c5971a44714e8f9819835e5b5fc
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 97ee36eb38ee8d140911e83415a25b9c
   m_configObjects: {}
