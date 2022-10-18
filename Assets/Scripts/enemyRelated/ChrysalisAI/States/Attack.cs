@@ -56,8 +56,7 @@ public class Attack : IState
     {
         yield return new WaitForSeconds(_chrysalisController.timeBetweenShots);
         RaycastHit hit;
-        if (Physics.Raycast(_chrysalisController.shootPosition.position, dir.normalized, out hit, 100) &&
-            !hit.collider.CompareTag("Hide"))
+        if (Physics.Raycast(_chrysalisController.shootPosition.position, dir.normalized, out hit, 1000)) //!hit.collider.CompareTag("Hide")
         {
             _chrysalisController.GetComponent<Renderer>().material.color = Color.blue;
             //Debug.Log(getProperAccuracyDelayVal());
