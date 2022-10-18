@@ -81,6 +81,7 @@ public class mothmanController : MonoBehaviour
     {
         PlayerLocation = PlayerManager.instance.playerUtils.transform.position;
         localHealth = mothmanStats.health;
+        navMeshAgent.speed = mothmanStats.chaseSpeed;
     }
 
     private void Update()

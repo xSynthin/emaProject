@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     {
         instance = this;
         // GManager.instance.onGameStartEvent += RepaintPlayerAmmo;
-        GManager.instance.onGameStartEvent += RepaintPlayerHP;
+        //GManager.instance.onGameStartEvent += RepaintPlayerHP;
         playerAmmoChange += UpdateAmmoUI;
     }
     public IEnumerator timer()
@@ -35,14 +35,14 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        PlayerHPChange += RepaintPlayerHP;
+        //PlayerHPChange += RepaintPlayerHP;
         StartCoroutine(timer());
         //playerAmmoChange += RepaintPlayerAmmo;
     }
-    private void RepaintPlayerHP()
-    {
-        playerHp.text = $"HP: {PlayerManager.instance.playerUtils.hp}";
-    }
+    // private void RepaintPlayerHP()
+    // {
+    //     playerHp.text = $"HP: {PlayerManager.instance.playerUtils.hp}";
+    // }
 
     private void UpdateAmmoUI()
     {
@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
         gameTimeUI.text = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
     }
 
-    public void CallPlayerHpChangeEvent() => PlayerHPChange?.Invoke();
+    //public void CallPlayerHpChangeEvent() => PlayerHPChange?.Invoke();
     // private void RepaintPlayerAmmo()
     // {
     //     playerAmmo.text = $"Ammo: {PlayerManager.instance.playerUtils.ammo}/{PlayerManager.instance.playerUtils.ammoMax}";

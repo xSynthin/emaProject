@@ -109,7 +109,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
+    agentSlope: 50
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccbf9de7d9010c24ea7ae50b9fc32257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseScreen: LoseScreen
 --- !u!4 &673972932
 Transform:
   m_ObjectHideFlags: 0
@@ -596,7 +597,7 @@ MonoBehaviour:
     value: {fileID: 1777430667}
   ammoMax: 0
   defaultReloadTime: 0
-  debug: 1
+  debug: 0
   playerOneShot: 1
   isDead: 0
 --- !u!114 &771582486

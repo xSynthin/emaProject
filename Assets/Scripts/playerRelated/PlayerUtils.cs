@@ -37,9 +37,9 @@ public class PlayerUtils : MonoBehaviour
         chrysalisAttackRanges = new Dictionary<float, List<float>>()
         {
             {40, new List<float>(){2, 5}},
-            {30, new List<float>(){1.25f, 10}},
-            {20, new List<float>(){0.5f, 20}},
-            {7, new List<float>(){0.03f, 300}},
+            {30, new List<float>(){1.00f, 10}},
+            {20, new List<float>(){0.3f, 20}},
+            {7, new List<float>(){0.001f, 300}},
             {0, new List<float>(){0, 500}},
         };
     }
@@ -58,14 +58,15 @@ public class PlayerUtils : MonoBehaviour
     {
         if (hp <= 0)
         {
-            PlayerManager.instance.CallPlayerDeathEvent();
+            //PlayerManager.instance.CallPlayerDeathEvent();
+            GManager.instance.CallGameLostEvent();
             // TODO DEATH HANDLING DESIGN
             print("DEAD");
         }
         else if(playerOneShot)
             if (isDead)
             {
-                PlayerManager.instance.CallPlayerDeathEvent();
+                GManager.instance.CallGameLostEvent();
                 //print("DEAD");
             }
     }
@@ -89,7 +90,7 @@ public class PlayerUtils : MonoBehaviour
     public void TakeDamage(float dmgToTake)
     {
         hp -= dmgToTake;
-        UIManager.instance.CallPlayerHpChangeEvent();
+        //UIManager.instance.CallPlayerHpChangeEvent();
     }
     public void decreaseAmmo(int ammoToDecrease) => ammo -= ammoToDecrease;
     public void DebugSpeed()

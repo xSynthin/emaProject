@@ -21,7 +21,6 @@ public class PlayerGunScript : MonoBehaviour
     [Header("Gun Vars")]
     [SerializeField] private int shotDistance;
     [SerializeField] private int attackDmg;
-    private Dictionary<float, float> chrysalisAttackRanges = new Dictionary<float, float>(); 
     void Start()
     {
         Instantiate(gunPrefab, weaponPosition.transform);

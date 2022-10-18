@@ -76,13 +76,13 @@ public class PlayerController : MonoBehaviour
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         // somewhere here should be sound effect
         // slope
-        rb.useGravity = !onSlope();
+        //rb.useGravity = !onSlope();
         if (onSlope() && !slopeExit && grounded)
         {
             rb.AddForce(GetSlopeMoveDirection() * (moveSpeed * 10 * 1.5f));
             if (rb.velocity.y > 0)
             {
-                rb.AddForce(Vector3.down * 100f);
+                //rb.AddForce(Vector3.down * 500f);
             }
         }
 
