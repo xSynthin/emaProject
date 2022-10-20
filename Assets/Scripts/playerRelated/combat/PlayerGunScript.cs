@@ -11,6 +11,7 @@ public class PlayerGunScript : MonoBehaviour
     [SerializeField] private Transform weaponPosition;
     [SerializeField] private GameObject gunPrefab;
     [SerializeField] public Transform shootPosition;
+    [SerializeField] public Transform crosshairPosition;
     [SerializeField] private KeyCode shootKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode reloadKey = KeyCode.R;
     [SerializeField] private ParticleSystem shotImpactParticleSystem;
@@ -54,7 +55,7 @@ public class PlayerGunScript : MonoBehaviour
         muzzleFlash.Play();
         AnimationManager.instance.CallPlayerShotEvent("playerGunShot");
         playerUtils.decreaseAmmo(1);
-        if (Physics.Raycast(shootPosition.position, shootPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide"))
+        if (Physics.Raycast(crosshairPosition.position, crosshairPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide"))
         {
             if (hit.transform.CompareTag("Chrysalis"))
             {
