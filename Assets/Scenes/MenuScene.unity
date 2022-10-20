@@ -240,7 +240,7 @@ MonoBehaviour:
   scenesToLoad:
   - PlayerScene
   - UIScene
-  - Playground
+  - Level1
 --- !u!1 &880602471
 GameObject:
   m_ObjectHideFlags: 0

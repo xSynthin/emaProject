@@ -8,8 +8,8 @@ public class EndPlayground : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene("MenuScene");
     }
 }
