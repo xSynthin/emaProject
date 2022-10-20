@@ -598,7 +598,7 @@ MonoBehaviour:
     value: {fileID: 1777430667}
   ammoMax: 0
   defaultReloadTime: 0
-  debug: 0
+  debug: 1
   playerOneShot: 1
   isDead: 0
 --- !u!114 &771582486
