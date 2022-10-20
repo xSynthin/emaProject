@@ -73,13 +73,21 @@ public class PlayerGunScript : MonoBehaviour
 
     private void resetAmmo()
     {
-        playerUtils.ammo = playerUtils.ammoMax;
-        UIManager.instance.CallPlayerAmmoChangeEvent();
+        //playerUtils.ammo = playerUtils.ammoMax;
+        //UIManager.instance.CallPlayerAmmoChangeEvent();
     }
     private IEnumerator ShootDelay()
     {
         while (true)
         {
+            if (playerUtils.ammo == 0)
+            {
+                AnimationManager.instance.CallPlayerReloadEvent("ReloadGun");
+                yield return new WaitForSeconds(playerUtils.reloadTime);
+                playerUtils.ammo = playerUtils.ammoMax;
+                UIManager.instance.CallPlayerAmmoChangeEvent();
+            }
+
             if (Input.GetKeyDown(reloadKey) && (playerUtils.ammo < playerUtils.ammoMax))
             {
                 AnimationManager.instance.CallPlayerReloadEvent("ReloadGun");
