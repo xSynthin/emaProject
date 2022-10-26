@@ -281,6 +281,7 @@ Transform:
   - {fileID: 2070524112}
   - {fileID: 1100746608}
   - {fileID: 1777430667}
+  - {fileID: 1951627298}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -596,6 +597,8 @@ MonoBehaviour:
     value: {fileID: 1100746608}
   - key: Level1
     value: {fileID: 1777430667}
+  - key: Lvl2K
+    value: {fileID: 1951627298}
   ammoMax: 0
   defaultReloadTime: 0
   debug: 1
@@ -645,6 +648,7 @@ MonoBehaviour:
   minEffectSpeed: 20
   killMultiplier: 1.3
   killTimer: 1.4
+  speedStageChangeCorrelation: 0.5
   CurrentSpeedBoost: 0
 --- !u!208 &771582488
 NavMeshObstacle:
@@ -1079,6 +1083,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 771582481}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1951627297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1951627298}
+  m_Layer: 0
+  m_Name: LvlK2PlayerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1951627298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951627297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578285919}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1988470672
 PrefabInstance:
