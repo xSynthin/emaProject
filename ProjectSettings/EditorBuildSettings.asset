@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Playground.unity
     guid: 8f0f1c5971a44714e8f9819835e5b5fc
+  - enabled: 1
+    path: Assets/Scenes/LevelK1.unity
+    guid: cf61a5eecd6e25841ba27af77c11d024
+  - enabled: 1
+    path: Assets/Scenes/LevelTryOuts.unity
+    guid: 104e429ed7283024f85e702d46c88acb
   m_configObjects: {}
