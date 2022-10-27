@@ -556,6 +556,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   grounded: 0
+  readyToJump: 0
   orientation: {fileID: 2052976186}
   moveDirection: {x: 0, y: 0, z: 0}
   maxSlopeAngle: 50
@@ -651,6 +652,12 @@ MonoBehaviour:
   killTimer: 1.4
   speedStageChangeCorrelation: 0.5
   CurrentSpeedBoost: 0
+  timerArray:
+  - 5
+  - 3
+  - 2
+  - 3
+  - 1
 --- !u!208 &771582488
 NavMeshObstacle:
   m_ObjectHideFlags: 0

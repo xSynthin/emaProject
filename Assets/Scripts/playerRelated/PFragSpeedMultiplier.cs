@@ -30,6 +30,16 @@ public class PFragSpeedMultiplier : MonoBehaviour
         PlayerCollections.SpeedStages.boosted4,
         PlayerCollections.SpeedStages.boosted5,
     };
+    public float[] timerArray = new float[5];
+    private Dictionary<PlayerCollections.SpeedStages, float> speedStageTimerDict = new Dictionary<PlayerCollections.SpeedStages, float>()
+    {
+        {PlayerCollections.SpeedStages.normal, 0},
+        {PlayerCollections.SpeedStages.boosted1, 0},
+        {PlayerCollections.SpeedStages.boosted2, 0},
+        {PlayerCollections.SpeedStages.boosted3, 0},
+        {PlayerCollections.SpeedStages.boosted4, 0},
+        {PlayerCollections.SpeedStages.boosted5, 0},
+    };
     private void Awake()
     {
         baseMoveSpeed = playerController.moveSpeed;
@@ -49,23 +59,21 @@ public class PFragSpeedMultiplier : MonoBehaviour
         airStagesVals.Add(PlayerCollections.SpeedStages.boosted3, baseAirSpeed * 1.25f);
         airStagesVals.Add(PlayerCollections.SpeedStages.boosted4, baseAirSpeed * 1.30f);
         airStagesVals.Add(PlayerCollections.SpeedStages.boosted5, baseAirSpeed * 1.35f);
+        // this should be also cleaned
+        speedStageTimerDict[PlayerCollections.SpeedStages.boosted1] = timerArray[0];
+        speedStageTimerDict[PlayerCollections.SpeedStages.boosted2] = timerArray[1];
+        speedStageTimerDict[PlayerCollections.SpeedStages.boosted3] = timerArray[2];
+        speedStageTimerDict[PlayerCollections.SpeedStages.boosted4] = timerArray[3];
+        speedStageTimerDict[PlayerCollections.SpeedStages.boosted5] = timerArray[4];
         ColorStages = new Dictionary<PlayerCollections.SpeedStages, Color>()
         {
             {PlayerCollections.SpeedStages.boosted1, Color.cyan},
             {PlayerCollections.SpeedStages.boosted2, Color.yellow},
-            {PlayerCollections.SpeedStages.boosted3, Color.cyan},
+            {PlayerCollections.SpeedStages.boosted3, Color.green},
             {PlayerCollections.SpeedStages.boosted4, Color.red},
             {PlayerCollections.SpeedStages.boosted5, Color.magenta},
         };
     }
-    // void SpeedBoostState()
-    // {
-    //     foreach (KeyValuePair<PlayerCollections.SpeedStages, float> entry in SpeedStagesVals)
-    //     {
-    //         if (Math.Abs(playerController.moveSpeed - entry.Value) < 0.001f)
-    //             CurrentSpeedBoost = entry.Key;
-    //     }
-    // }
     void checkParticles()
     {
         if(playerController.moveSpeed > minEffectSpeed && playerController.moveDirection != Vector3.zero)
@@ -73,17 +81,6 @@ public class PFragSpeedMultiplier : MonoBehaviour
         else
             speedGraph.gameObject.SetActive(false);
     }
-    // void Boost()
-    // {
-    //     boostMoveSpeed();
-    //     SpeedBoostState();
-    // }
-    // void UnBoost()
-    // {
-    //     unBoostMoveSpeed();
-    //     SpeedBoostState();
-    //     PlayerManager.instance.CallBoostStopEvent();
-    // }
     void Start()
     {
         EntitiesManager.instance.EnemyDeathEvent += Booster;
@@ -100,7 +97,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
         if (CurrentSpeedBoost != PlayerCollections.SpeedStages.normal)
         {
             CurrentSpeedBoost = speedStages[speedStages.IndexOf(CurrentSpeedBoost) - 1];
-            float currentWaitTime = killTimer / (speedStages.IndexOf(CurrentSpeedBoost) - speedStageChangeCorrelation * speedStages.IndexOf(CurrentSpeedBoost));
+            float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             if (CurrentSpeedBoost != PlayerCollections.SpeedStages.normal){
                 UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(currentWaitTime, ColorStages[CurrentSpeedBoost]);
             }
@@ -115,7 +112,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
         if (CurrentSpeedBoost != PlayerCollections.SpeedStages.boosted5)
         {
             CurrentSpeedBoost = speedStages[speedStages.IndexOf(CurrentSpeedBoost) + 1];
-            float currentWaitTime = killTimer / (speedStages.IndexOf(CurrentSpeedBoost) - speedStageChangeCorrelation * speedStages.IndexOf(CurrentSpeedBoost));
+            float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(currentWaitTime, ColorStages[CurrentSpeedBoost]);
             setSpeed(CurrentSpeedBoost);
             yield return new WaitForSeconds(currentWaitTime);
@@ -123,58 +120,19 @@ public class PFragSpeedMultiplier : MonoBehaviour
         }
         else
         {
-            float currentWaitTime = killTimer / speedStages.IndexOf(CurrentSpeedBoost) * 1.5f;
+            float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             yield return new WaitForSeconds(currentWaitTime);
             StartCoroutine(UnBoost());
         }
     }
-
     void Booster()
     {
         StopAllCoroutines();
         StartCoroutine(Boost());
     }
-    // void Booster()
-    // {
-    //     if (playerController.moveSpeed < SpeedStagesVals[PlayerCollections.SpeedStages.boosted5])
-    //     {
-    //         StopAllCoroutines();
-    //         StartCoroutine(SpeedBuff());
-    //         UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(killTimer, ColorStages[CurrentSpeedBoost]);
-    //     }
-    //     else
-    //     {
-    //         StopAllCoroutines();
-    //         StartCoroutine(MaxSpeedBuff());
-    //         UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(killTimer, ColorStages[CurrentSpeedBoost]);
-    //     }
-    // }
-    //
-    // IEnumerator MaxSpeedBuff()
-    // {
-    //     yield return new WaitForSeconds(killTimer);
-    //     UnBoost();
-    // }
-    // IEnumerator SpeedBuff()
-    // {
-    //     Boost();
-    //     yield return new WaitForSeconds(killTimer);
-    //     UnBoost();
-    // }
-    //
     private void setSpeed(PlayerCollections.SpeedStages speedVal)
     {
         playerController.moveSpeed = SpeedStagesVals[CurrentSpeedBoost];
         playerController.airMultiplier = airStagesVals[CurrentSpeedBoost];
     }
-    // private void boostMoveSpeed()
-    // {
-    //     playerController.moveSpeed *= killMultiplier;
-    //     playerController.airMultiplier += 0.05f;
-    // }
-    // private void unBoostMoveSpeed()
-    // {
-    //     playerController.moveSpeed = baseMoveSpeed;
-    //     playerController.airMultiplier -= 0.05f;
-    // }
 }
