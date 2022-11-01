@@ -21,6 +21,7 @@ public class PlayerUtils : MonoBehaviour
     [HideInInspector] public float defaultReloadTime;
     public bool debug;
     public bool playerOneShot = false;
+    private Vector3 currSceneSpawnTransform = new Vector3();
     [HideInInspector] public bool isDead = false;
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class PlayerUtils : MonoBehaviour
         {
             DebugSpeed();
             DebugEnemy();
+            DebugRestart();
         }
     }
 
@@ -79,7 +81,10 @@ public class PlayerUtils : MonoBehaviour
                 foreach (var element in SceneSpawningPointListDict)
                 {
                     if (SceneManager.GetSceneAt(i) == SceneManager.GetSceneByName(element.Key))
+                    {
                         transform.position = element.Value.position;
+                        currSceneSpawnTransform = element.Value.position;
+                    }
                 }
         }
     }
@@ -98,6 +103,14 @@ public class PlayerUtils : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.V))
         {
             EntitiesManager.instance.CallEnemyDeathEvent();
+        }
+    }
+
+    public void DebugRestart()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            transform.position = currSceneSpawnTransform;
         }
     }
     public void DebugEnemy()
