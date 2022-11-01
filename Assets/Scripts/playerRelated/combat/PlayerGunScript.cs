@@ -55,8 +55,9 @@ public class PlayerGunScript : MonoBehaviour
         muzzleFlash.Play();
         AnimationManager.instance.CallPlayerShotEvent("playerGunShot");
         playerUtils.decreaseAmmo(1);
-        if (Physics.Raycast(crosshairPosition.position, crosshairPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide"))
+        if (Physics.Raycast(crosshairPosition.position, crosshairPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide") && !hit.collider.CompareTag("AntiSpawnerTag"))
         {
+            print(hit.transform.tag);
             if (hit.transform.CompareTag("Chrysalis"))
             {
                 float dir = (transform.position - hit.point).magnitude;

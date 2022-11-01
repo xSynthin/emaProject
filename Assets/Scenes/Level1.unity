@@ -576,9 +576,9 @@ GameObject:
   - component: {fileID: 620860727}
   - component: {fileID: 620860729}
   - component: {fileID: 620860728}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SPA
-  m_TagString: Untagged
+  m_TagString: AntiSpawnerTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
