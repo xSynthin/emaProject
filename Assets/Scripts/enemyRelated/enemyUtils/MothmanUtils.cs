@@ -6,6 +6,7 @@ using UnityEngine;
 public class MothmanUtils : EnemyUtils
 {
     public EnemyStats mothManStats;
+    public GameObject EnemyDeathSound;
     [HideInInspector] public float health;
     private void Update()
     {
@@ -35,6 +36,7 @@ public class MothmanUtils : EnemyUtils
 
     private void Death()
     {
+        Instantiate(EnemyDeathSound, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 

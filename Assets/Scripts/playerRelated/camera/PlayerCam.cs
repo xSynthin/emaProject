@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerCam : MonoBehaviour
@@ -16,6 +17,9 @@ public class PlayerCam : MonoBehaviour
     float yRotation;
     public Camera camT;
     private Vector3 bobVector;
+    public AudioSource src;
+    public AudioClip leftFoot;
+    public AudioClip rightFoot;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -59,6 +63,20 @@ public class PlayerCam : MonoBehaviour
     private void HeadBob(float period, float vAmplitude, float hAmplitude)
     {
         bobVector = new Vector3(Mathf.Cos(period) * vAmplitude, Mathf.Sin(period*2) * hAmplitude, camT.transform.localPosition.z);
+        float cos = Mathf.Cos(period);
+        if (pController.rb.velocity.magnitude > minBobVal && pController.grounded)
+        {
+            if (Math.Abs(cos - 1) < 0.01f)
+            {
+                src.clip = leftFoot;
+                src.Play();
+            }
+            if (Math.Abs(cos - (-1)) < 0.01f)
+            {
+                src.clip = rightFoot;
+                src.Play();
+            }
+        }
     }
     void DynamicFOV()
     {

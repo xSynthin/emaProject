@@ -18,6 +18,7 @@ public class PlayerGunScript : MonoBehaviour
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private LineRenderer gunTracer;
     [SerializeField] private PlayerUtils playerUtils;
+    [SerializeField] private AudioClip enemyDamageTaken;
     // gun opts
     [Header("Gun Vars")]
     [SerializeField] private int shotDistance;
@@ -57,18 +58,33 @@ public class PlayerGunScript : MonoBehaviour
         playerUtils.decreaseAmmo(1);
         if (Physics.Raycast(crosshairPosition.position, crosshairPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide") && !hit.collider.CompareTag("AntiSpawnerTag"))
         {
-            print(hit.transform.tag);
             if (hit.transform.CompareTag("Chrysalis"))
             {
                 float dir = (transform.position - hit.point).magnitude;
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage((int)getProperAccuracyDamageVal(dir));
                 print((int)getProperAccuracyDamageVal(dir));
             }
-            if(hit.transform.CompareTag("Enemy"))
+
+            if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("HitScanLayer"))
+            {
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage(attackDmg);
-            GameObject impact = Instantiate(shotImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
-            SpawnBulletTrail(hit.point);
-            Destroy(impact, shotImpactParticleSystem.time + 0.5f);
+                hit.transform.gameObject.GetComponent<AudioSource>().clip = enemyDamageTaken;
+                hit.transform.gameObject.GetComponent<AudioSource>().Play();
+            }
+
+            if (hit.transform.CompareTag("HitScanLayer"))
+            {
+                Vector3 pos = hit.transform.position;
+                GameObject impact = Instantiate(shotImpactParticleSystem, pos, Quaternion.LookRotation(hit.normal)).gameObject;
+                SpawnBulletTrail(pos);
+                Destroy(impact, shotImpactParticleSystem.time + 0.5f);
+            }
+            else
+            {
+                GameObject impact = Instantiate(shotImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
+                SpawnBulletTrail(hit.point);
+                Destroy(impact, shotImpactParticleSystem.time + 0.5f);
+            }
         }
     }
 

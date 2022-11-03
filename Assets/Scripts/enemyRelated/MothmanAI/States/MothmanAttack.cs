@@ -7,6 +7,7 @@ public class MothmanAttack : IState
     private readonly mothmanController _mothmanController;
     private readonly NavMeshAgent _navMeshAgent;
     private bool canAttack = true;
+    private GameObject soundPlayer;
 
     public MothmanAttack(mothmanController mothmanController, NavMeshAgent navMeshAgent)
     {
@@ -19,13 +20,15 @@ public class MothmanAttack : IState
         _navMeshAgent.enabled = true;
         if (canAttack)
         {
-            if (PlayerManager.instance.playerUtils.playerOneShot)
-                PlayerManager.instance.playerUtils.isDead = true;
-            else{
-                PlayerManager.instance.playerUtils.TakeDamage(3);
-                canAttack = false;
-                _mothmanController.StartCoroutine(ResetAttack());
-            }
+            soundPlayer = mothmanController.Instantiate(_mothmanController.UniversalAudioPlayer);
+            soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(_mothmanController.attack);
+            // if (PlayerManager.instance.playerUtils.playerOneShot)
+                // PlayerManager.instance.playerUtils.isDead = true;
+            // else{
+            //     PlayerManager.instance.playerUtils.TakeDamage(3);
+            //     canAttack = false;
+            //     _mothmanController.StartCoroutine(ResetAttack());
+            // }
         }
     }
 

@@ -15,6 +15,9 @@ public class mothmanController : MonoBehaviour
     private MothmanAttack mothmanAttack;
     private NavMeshAgent navMeshAgent;
     private float localHealth;
+    public AudioClip attack;
+    public AudioClip playerSeenGrowl;
+    public GameObject UniversalAudioPlayer;
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -37,6 +40,8 @@ public class mothmanController : MonoBehaviour
         if (mothmanUtils.health < localHealth)
         {
             localHealth = mothmanUtils.health;
+            GameObject soundPlayer = Instantiate(UniversalAudioPlayer);
+            soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(playerSeenGrowl);
             return true;
         }
         return false;

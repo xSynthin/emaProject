@@ -12,11 +12,8 @@ public class PFragSpeedMultiplier : MonoBehaviour
     [SerializeField] private float minEffectSpeed;
     [Header("Frag Multiplier Variables")]
     [SerializeField] private float killMultiplier;
-    [SerializeField] private float killTimer;
     private float baseMoveSpeed;
     private float baseAirSpeed;
-    [SerializeField] private float speedStageChangeCorrelation = 0.5f;
-    //private float radius = 2;
     public PlayerCollections.SpeedStages CurrentSpeedBoost = PlayerCollections.SpeedStages.normal;
     [HideInInspector] public Dictionary<PlayerCollections.SpeedStages, float> SpeedStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
     [HideInInspector] public Dictionary<PlayerCollections.SpeedStages, float> airStagesVals = new Dictionary<PlayerCollections.SpeedStages, float>();
@@ -40,6 +37,12 @@ public class PFragSpeedMultiplier : MonoBehaviour
         {PlayerCollections.SpeedStages.boosted4, 0},
         {PlayerCollections.SpeedStages.boosted5, 0},
     };
+    public AudioClip boostUP1;
+    public AudioClip boostUP2;
+    public AudioClip boostUP3;
+    public AudioClip BoostDown;
+    [SerializeField] private GameObject uniClipSpeaker;
+    [SerializeField] private float finalSpeedBoost = 120f;
     private void Awake()
     {
         baseMoveSpeed = playerController.moveSpeed;
@@ -96,6 +99,8 @@ public class PFragSpeedMultiplier : MonoBehaviour
     {
         if (CurrentSpeedBoost != PlayerCollections.SpeedStages.normal)
         {
+            GameObject speaker = Instantiate(uniClipSpeaker, transform.position, transform.rotation);
+            speaker.GetComponent<UniversalClipSpeaker>().PlayCLip(BoostDown);
             CurrentSpeedBoost = speedStages[speedStages.IndexOf(CurrentSpeedBoost) - 1];
             float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             if (CurrentSpeedBoost != PlayerCollections.SpeedStages.normal){
@@ -112,6 +117,29 @@ public class PFragSpeedMultiplier : MonoBehaviour
         if (CurrentSpeedBoost != PlayerCollections.SpeedStages.boosted5)
         {
             CurrentSpeedBoost = speedStages[speedStages.IndexOf(CurrentSpeedBoost) + 1];
+            if (CurrentSpeedBoost is > PlayerCollections.SpeedStages.boosted2 and < PlayerCollections.SpeedStages.boosted4)
+            {
+                // src.clip = boostUP2;
+                GameObject speaker = Instantiate(uniClipSpeaker, transform.position, transform.rotation);
+                speaker.GetComponent<UniversalClipSpeaker>().PlayCLip(boostUP1);
+            }
+            else if (CurrentSpeedBoost > PlayerCollections.SpeedStages.boosted3)
+            {
+                // src.clip = boostUP3;
+                GameObject speaker = Instantiate(uniClipSpeaker, transform.position, transform.rotation);
+                speaker.GetComponent<UniversalClipSpeaker>().PlayCLip(boostUP1);
+            }
+            else
+            {
+                // src.clip = boostUP1;
+                GameObject speaker = Instantiate(uniClipSpeaker, transform.position, transform.rotation);
+                speaker.GetComponent<UniversalClipSpeaker>().PlayCLip(boostUP1);
+            }
+
+            if (CurrentSpeedBoost == PlayerCollections.SpeedStages.boosted5)
+            {
+                playerController.rb.AddForce(playerController.moveDirection.normalized * finalSpeedBoost, ForceMode.Impulse);
+            }
             float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(currentWaitTime, ColorStages[CurrentSpeedBoost]);
             setSpeed(CurrentSpeedBoost);
@@ -120,7 +148,11 @@ public class PFragSpeedMultiplier : MonoBehaviour
         }
         else
         {
+            // src.clip = boostUP3;
+            GameObject speaker = Instantiate(uniClipSpeaker, transform.position, transform.rotation);
+            speaker.GetComponent<UniversalClipSpeaker>().PlayCLip(boostUP1);
             float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
+            UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(currentWaitTime, ColorStages[CurrentSpeedBoost]);
             yield return new WaitForSeconds(currentWaitTime);
             StartCoroutine(UnBoost());
         }

@@ -76,7 +76,7 @@ public class Sliding : MonoBehaviour
                     slideTimer -= Time.deltaTime;
                 }
             }
-        if (slideTimer <= 0)
+            if (!(slideTimer <= 0)) return;
             StopSlide();
     }
 

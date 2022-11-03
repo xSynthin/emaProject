@@ -9,6 +9,7 @@ TagManager:
   - Hide
   - Chrysalis
   - AntiSpawnerTag
+  - HitScanLayer
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - CameraHide
   - Player
   - AntiSpawnerLayer
-  - 
+  - HitscanLayer
   - 
   - 
   - 
