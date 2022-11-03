@@ -21,6 +21,7 @@ public class Sliding : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private bool sliding;
+    private Vector3 inputDirection;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -51,6 +52,7 @@ public class Sliding : MonoBehaviour
 
     private void StartSlide()
     {
+        inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         sliding = true;
         playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
         rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
@@ -59,7 +61,6 @@ public class Sliding : MonoBehaviour
 
     private void SlidingMov()
     {
-        Vector3 inputDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
             if (!pc.onSlope() || pc.slopeAngle > pc.maxSlopeAngle)
             {
                 rb.AddForce(inputDirection.normalized * slideForce, ForceMode.Force);
