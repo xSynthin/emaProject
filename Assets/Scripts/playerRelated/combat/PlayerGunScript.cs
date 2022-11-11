@@ -18,11 +18,14 @@ public class PlayerGunScript : MonoBehaviour
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private LineRenderer gunTracer;
     [SerializeField] private PlayerUtils playerUtils;
-    [SerializeField] private AudioClip enemyDamageTaken;
+    [SerializeField] private AudioClip MothmanDamageTaken;
+    [SerializeField] private AudioClip WormisDamageTaken;
+    [SerializeField] private AudioClip ChrysalisDamageTaken;
     // gun opts
     [Header("Gun Vars")]
     [SerializeField] private int shotDistance;
     [SerializeField] private int attackDmg;
+    public GameObject UniversalAudioPlayer;
     void Start()
     {
         Instantiate(gunPrefab, weaponPosition.transform);
@@ -58,18 +61,30 @@ public class PlayerGunScript : MonoBehaviour
         playerUtils.decreaseAmmo(1);
         if (Physics.Raycast(crosshairPosition.position, crosshairPosition.forward, out hit, shotDistance) && !hit.collider.CompareTag("Hide") && !hit.collider.CompareTag("AntiSpawnerTag"))
         {
-            if (hit.transform.CompareTag("Chrysalis"))
+            if (hit.transform.CompareTag("Chrysalis") || hit.transform.CompareTag("ChrysalisHitscan"))
             {
                 float dir = (transform.position - hit.point).magnitude;
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage((int)getProperAccuracyDamageVal(dir));
-                print((int)getProperAccuracyDamageVal(dir));
+                GameObject soundPlayer =
+                    Instantiate(UniversalAudioPlayer, hit.transform.position, hit.transform.rotation);
+                soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(ChrysalisDamageTaken);
             }
 
             if (hit.transform.CompareTag("Enemy") || hit.transform.CompareTag("HitScanLayer"))
             {
                 hit.transform.gameObject.GetComponent<EnemyUtils>()?.TakeDamage(attackDmg);
-                hit.transform.gameObject.GetComponent<AudioSource>().clip = enemyDamageTaken;
-                hit.transform.gameObject.GetComponent<AudioSource>().Play();
+                // TODO AUDIO BUG 
+                GameObject soundPlayer =
+                    Instantiate(UniversalAudioPlayer, hit.transform.position, hit.transform.rotation);
+                if (hit.transform.GetComponent<MothmanBulletMagnetism>() == true ||
+                    hit.transform.GetComponent<mothmanController>() == true)
+                {
+                    soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(MothmanDamageTaken);
+                }
+                else
+                {
+                    soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(WormisDamageTaken);
+                }
             }
 
             if (hit.transform.CompareTag("HitScanLayer"))

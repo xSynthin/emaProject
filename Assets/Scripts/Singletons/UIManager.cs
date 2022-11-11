@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     //     playerHp.text = $"HP: {PlayerManager.instance.playerUtils.hp}";
     // }
 
-    private void UpdateAmmoUI()
+    public void UpdateAmmoUI()
     {
         if (PlayerManager.instance.playerUtils.ammo == PlayerManager.instance.playerUtils.ammoMax)
         {
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            //print(ammoUI[PlayerManager.instance.playerUtils.ammo]);
+            // print(ammoUI[PlayerManager.instance.playerUtils.ammo]);
             ammoUI[PlayerManager.instance.playerUtils.ammo].gameObject.SetActive(false);
         }
     }

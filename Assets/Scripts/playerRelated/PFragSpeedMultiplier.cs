@@ -79,7 +79,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
     }
     void checkParticles()
     {
-        if(playerController.moveSpeed > minEffectSpeed && playerController.moveDirection != Vector3.zero)
+        if(playerController.moveSpeed > minEffectSpeed && playerController.moveDirectionF != Vector3.zero)
             speedGraph.gameObject.SetActive(true);
         else
             speedGraph.gameObject.SetActive(false);
@@ -138,7 +138,7 @@ public class PFragSpeedMultiplier : MonoBehaviour
 
             if (CurrentSpeedBoost == PlayerCollections.SpeedStages.boosted5)
             {
-                playerController.rb.AddForce(playerController.moveDirection.normalized * finalSpeedBoost, ForceMode.Impulse);
+                playerController.rb.AddForce(playerController.moveDirectionF.normalized * finalSpeedBoost, ForceMode.Impulse);
             }
             float currentWaitTime = speedStageTimerDict[CurrentSpeedBoost];
             UIManager.instance.SpeedSlider.GetComponent<SpeedSlider>().TweenSpeedSlider(currentWaitTime, ColorStages[CurrentSpeedBoost]);

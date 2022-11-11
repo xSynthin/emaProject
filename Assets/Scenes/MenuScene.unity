@@ -238,8 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenesToLoad:
-  - PlayerScene
   - UIScene
+  - PlayerScene
   - LvlK2
 --- !u!1 &880602471
 GameObject:

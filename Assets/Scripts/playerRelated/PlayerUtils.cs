@@ -37,9 +37,9 @@ public class PlayerUtils : MonoBehaviour
         handlePlayerSpawn();
         chrysalisAttackRanges = new Dictionary<float, List<float>>()
         {
-            {40, new List<float>(){2, 5}},
-            {30, new List<float>(){1.00f, 10}},
-            {20, new List<float>(){0.3f, 20}},
+            {40, new List<float>(){0.75f, 20}},
+            {30, new List<float>(){0.60f, 25}},
+            {20, new List<float>(){0.3f, 30}},
             {7, new List<float>(){0.001f, 300}},
             {0, new List<float>(){0, 500}},
         };
@@ -69,7 +69,8 @@ public class PlayerUtils : MonoBehaviour
             if (isDead)
             {
                 GManager.instance.CallGameLostEvent();
-                //print("DEAD");
+                ammo = ammoMax;
+                UIManager.instance.UpdateAmmoUI();
             }
     }
     public void handlePlayerSpawn()

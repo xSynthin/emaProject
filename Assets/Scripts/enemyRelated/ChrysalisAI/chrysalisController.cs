@@ -15,6 +15,8 @@ public class chrysalisController : MonoBehaviour
     private Follow followPlayer;
     private Attack attackPlayer;
     public float timeBetweenShots = 0.7f;
+    public AudioClip chrysalisSpit;
+    public GameObject UniversalAudioPlayer;
     private void Awake()
     {
         var navMeshAgent = GetComponent<NavMeshAgent>();
@@ -79,5 +81,10 @@ public class chrysalisController : MonoBehaviour
         lineTrail.SetPosition(0, position);
         lineTrail.SetPosition(1, point);
         Destroy(bulletTrail, 0.2f);
+    }
+    public void PlayAttackSound(AudioClip sound)
+    {
+        GameObject soundPlayer = Instantiate(UniversalAudioPlayer);
+        soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(sound);
     }
 }

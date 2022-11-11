@@ -22,19 +22,19 @@ public class MothmanAttack : IState
         {
             soundPlayer = mothmanController.Instantiate(_mothmanController.UniversalAudioPlayer);
             soundPlayer.GetComponent<UniversalClipSpeaker>().PlayCLip(_mothmanController.attack);
-            // if (PlayerManager.instance.playerUtils.playerOneShot)
-                // PlayerManager.instance.playerUtils.isDead = true;
-            // else{
-            //     PlayerManager.instance.playerUtils.TakeDamage(3);
-            //     canAttack = false;
-            //     _mothmanController.StartCoroutine(ResetAttack());
-            // }
+            if (PlayerManager.instance.playerUtils.playerOneShot)
+                PlayerManager.instance.playerUtils.isDead = true;
+            else{
+                PlayerManager.instance.playerUtils.TakeDamage(3);
+                canAttack = false;
+                _mothmanController.StartCoroutine(ResetAttack());
+            }
         }
     }
 
     IEnumerator ResetAttack()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         canAttack = true;
     }
     public void OnExit()

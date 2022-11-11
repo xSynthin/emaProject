@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    private float baseMoveSpeed;
     [Header("Keymap")]
     public KeyCode jumpKey = KeyCode.Space;
     [Header("Ground Check Related")]
@@ -24,7 +25,8 @@ public class PlayerController : MonoBehaviour
     float verticalInput;
     [Header("Assignable")]
     public Transform orientation;
-    [HideInInspector] public Vector3 moveDirection;
+    [HideInInspector] public Vector3 moveDirectionF;
+    [HideInInspector] public Vector3 moveDirectionS;
     internal Rigidbody rb;
     [Header("Slope")] 
     public float maxSlopeAngle;
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        baseMoveSpeed = moveSpeed;
     }
     private void Update()
     {
@@ -71,19 +74,26 @@ public class PlayerController : MonoBehaviour
     }
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirectionF = orientation.forward * verticalInput;
+        moveDirectionS = orientation.right * horizontalInput;
         //rb.useGravity = !onSlope();
         // rb.velocity when slope is bigger than maxSlope
         if (grounded && !onSlope())
         {
-            rb.AddForce(moveDirection.normalized * (moveSpeed * 10));
+            rb.AddForce(moveDirectionF.normalized * (moveSpeed * 10));
+            rb.AddForce(moveDirectionS.normalized * (baseMoveSpeed * 10));
         }
         else if (grounded && onSlope())
         {
-            rb.AddForce(GetSlopeMoveDirection(moveDirection) * (moveSpeed * 10));
+            rb.AddForce(GetSlopeMoveDirection(moveDirectionF) * (moveSpeed * 10));
+            rb.AddForce(GetSlopeMoveDirection(moveDirectionS) * (baseMoveSpeed * 10));
         }
         // skok
-        else if (!grounded) rb.AddForce(moveDirection.normalized * (moveSpeed * airMultiplier * 1.5f));
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirectionF.normalized * (moveSpeed * airMultiplier * 1.5f));
+            rb.AddForce(moveDirectionS.normalized * (baseMoveSpeed * airMultiplier * 1.5f));
+        }
         UpdateSlopeSliding();
     }
 

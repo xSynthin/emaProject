@@ -10,6 +10,7 @@ TagManager:
   - Chrysalis
   - AntiSpawnerTag
   - HitScanLayer
+  - ChrysalisHitscan
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Player
   - AntiSpawnerLayer
   - HitscanLayer
-  - 
-  - 
+  - Mothman
+  - Weapon
   - 
   - 
   - 

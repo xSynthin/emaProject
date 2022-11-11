@@ -42,7 +42,6 @@ public class Attack : IState
                 attackRangeOffset = element.Key;
             else
             {
-                //Debug.Log($"{attackRangeOffset}:{element.Key}");
                 if ((dir.magnitude < attackRangeOffset) && (dir.magnitude > element.Key))
                 {
                     return attackRanges[attackRangeOffset][0];
@@ -59,9 +58,8 @@ public class Attack : IState
         if (Physics.Raycast(_chrysalisController.shootPosition.position, dir.normalized, out hit, 1000)) //!hit.collider.CompareTag("Hide")
         {
             _chrysalisController.GetComponent<Renderer>().material.color = Color.blue;
-            //Debug.Log(getProperAccuracyDelayVal());
             yield return new WaitForSeconds(getProperAccuracyDelayVal());
-            yield return null;
+            _chrysalisController.PlayAttackSound(_chrysalisController.chrysalisSpit);
             _chrysalisController.SpawnBulletTrail(hit.point);
             if (Vector3.Distance(hit.point, PlayerManager.instance.playerUtils.transform.position) <= 0.7f){
                 if (PlayerManager.instance.playerUtils.playerOneShot)
